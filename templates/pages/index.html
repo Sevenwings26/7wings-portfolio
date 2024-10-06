@@ -6,7 +6,7 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="{% static 'assets/img/hero-bg.jpg' %}" alt="" data-aos="fade-in">
+      <img src="{% static 'assets/img/herobg.jpg' %}" alt="" data-aos="fade-in">
       <div class="container" data-aos="zoom-out" data-aos-delay="100">
         <h2>{{username}}</h2>
         <p>I'm <span class="typed" data-typed-items="{{title1}}, {{title2}}, {{title2}}, {{title2}} ">{{title1}}</span><span class="typed-cursor typed-cursor--blink"></span></p>
@@ -98,7 +98,6 @@
               </div>
             </div>
           </div><!-- End Info Item -->
-
         </div>
 
         <form action="{% url 'contact' %}" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="600">
