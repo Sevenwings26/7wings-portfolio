@@ -12,6 +12,8 @@ def index(request):
         "brand_name": general_records.brand_name,
         "username": general_records.name,
         "phone": general_records.phone,
+        "email": general_records.email,
+        "address": general_records.address,
         "description": general_records.description,
         "title1":general_records.title_one,
         "title2":general_records.title_two,
@@ -47,3 +49,9 @@ def contact_form(request):
         
 
     return redirect('index')
+
+
+# about page
+def about(request):
+    # context = 
+    return render(request, "pages/about.html")

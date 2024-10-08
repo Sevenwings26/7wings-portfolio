@@ -7,6 +7,8 @@ class GeneralInfo(models.Model):
     name = models.CharField(max_length=60)
     phone = models.CharField(max_length=25)
     description = models.TextField(blank=True)
+    email = models.EmailField(default='mail@mail.com', blank=True)
+    address = models.CharField(max_length=100, blank=True, default='location')
     title_one = models.CharField(max_length=60, blank=False, null=True)
     title_two = models.CharField(max_length=60, blank=True, null=True)
     title_three = models.CharField(max_length=60, blank=True, null=True)
@@ -15,6 +17,7 @@ class GeneralInfo(models.Model):
     f_url = models.URLField()
     ig_url = models.URLField()
     linkedin_url = models.URLField()
+
 
     
 class Service(models.Model):
