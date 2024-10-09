@@ -43,38 +43,20 @@
     />
 
     <!-- Main CSS File -->
-    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/base.css' %}" rel="stylesheet" />
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
   </head>
-
   <body class="index-page">
-    {% if 'about' not in request.path %}
-      {% block header %}
-      <header id="header" class="header d-flex align-items-center fixed-top">
-        <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-          <div class='brand-box'>
-            <img src="{% static 'assets/img/7wings-white.png' %}" class='brand' alt="">      
-          </div>
-          <nav id="navmenu" class="navmenu">
-            <ul>
-              <li><a href="/" class="active">Home</a></li>
-              <li><a href="{% url 'about' %}">About</a></li>
-              <li><a href="">Resume</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#">Portfolio</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-          </nav>
-        </div>
-      </header>
-      {% endblock %}      
+
+
+      {% if 'about' not in request.path %}
+        {% include 'const/header.html' %}
       {% endif %}
       
-      <main class="main">
+    <main class="main">
       {% block content %} 
       {% endblock %}
-      </main>
+    </main>
     
     {% include 'const/footer.html' %}
 
@@ -82,9 +64,9 @@
     <a
       href="#"
       id="scroll-top"
-      class="scroll-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+      class="scroll-top d-flex align-items-center justify-content-center">
+      <i class="bi bi-arrow-up-short"></i>
+    </a>
 
     <!-- Preloader -->
     <div id="preloader"></div>
@@ -102,6 +84,7 @@
     <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
 
     <!-- Main JS File -->
-    <script src="{% static 'assets/js/main.js' %}"></script>
+    {% comment %} <script src="{% static 'assets/js/main.js' %}"></script> {% endcomment %}
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
   </body>
 </html>

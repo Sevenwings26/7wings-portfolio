@@ -18,6 +18,14 @@ class GeneralInfo(models.Model):
     ig_url = models.URLField()
     linkedin_url = models.URLField()
 
+    # add for more variables 
+    about_title = models.CharField(max_length=200, blank=True, default='text')
+    birthday = models.CharField(max_length=20, blank=True, default='text')
+    degree = models.CharField(max_length=150, blank=True, default='text')
+    job_type = models.CharField(max_length=150, blank=True, default='text')
+    location = models.CharField(max_length=150, blank=True, default='text')
+    bio = RichTextField(blank=False, default='text')
+
 
     
 class Service(models.Model):
@@ -28,4 +36,3 @@ class Service(models.Model):
     def __str__(self):
         return self.title
 
-        

@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import GeneralInfo, Service
 from django.core.mail import send_mail
 from django.conf import settings
+from ckeditor.fields import RichTextField
+
 
 # Create your views here.
 def index(request):
@@ -23,6 +25,14 @@ def index(request):
         "f_url":general_records.f_url,
         "ig_url":general_records.ig_url,
         "linkedin_url":general_records.linkedin_url,
+        
+        "about_title":general_records.about_title,
+        "degree":general_records.degree,
+        "job_type":general_records.job_type,
+        "location":general_records.location,
+        "bio":general_records.bio,
+
+
 
         "services":services,
     }
@@ -53,5 +63,17 @@ def contact_form(request):
 
 # about page
 def about(request):
-    # context = 
-    return render(request, "pages/about.html")
+    general_records = GeneralInfo.objects.first()
+    context = {
+        "brand_name": general_records.brand_name,
+        "phone": general_records.phone,
+        "email": general_records.email,
+        "description": general_records.description,
+        
+        "about_title":general_records.about_title,
+        "degree":general_records.degree,
+        "job_type":general_records.job_type,
+        "location":general_records.location,
+        "bio":general_records.bio,
+    }
+    return render(request, "pages/about.html", context)
