@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.http import HttpRequest
-from .models import GeneralInfo, Service
+from .models import GeneralInfo, Service, Frontendskill, Backend_dataskill
 
 # Register your models here.
 # iyanuSite
@@ -23,3 +23,5 @@ class GeneralInfoAdmin(admin.ModelAdmin):
     
 
 admin.site.register(Service)
+admin.site.register(Frontendskill)
+admin.site.register(Backend_dataskill)

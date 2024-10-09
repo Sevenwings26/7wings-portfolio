@@ -17,6 +17,7 @@ class GeneralInfo(models.Model):
     f_url = models.URLField()
     ig_url = models.URLField()
     linkedin_url = models.URLField()
+    github_url = models.URLField(default="https//:github.com")
 
     # add for more variables 
     about_title = models.CharField(max_length=200, blank=True, default='text')
@@ -35,4 +36,24 @@ class Service(models.Model):
 
     def __str__(self):
         return self.title
+
+
+# skills set1 
+class Frontendskill(models.Model):
+    skill = models.CharField(max_length=150, blank=True)
+    percentage = models.CharField(max_length=15, blank=True)
+    value = models.IntegerField()
+
+    def __str__(self):
+        return f"Percentage: {self.percentage}"
+
+class Backend_dataskill(models.Model):
+    skill = models.CharField(max_length=150, blank=True)
+    percentage = models.CharField(max_length=15, blank=True)
+    value = models.IntegerField()
+
+    def __str__(self):
+        return f"Percentage: {self.percentage}"
+
+
 

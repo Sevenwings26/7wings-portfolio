@@ -1,0 +1,48 @@
+{% extends "const/base.html" %} 
+{% load static %} 
+{% block title %} Resume
+{% endblock %} 
+{% block content %}
+
+<!-- Page Title -->
+<div class="page-title" data-aos="fade">
+  <div class="heading">
+    <div class="container">
+      <div class="row d-flex justify-content-center text-center">
+        <div class="col-lg-8">
+          <div class="brand-box" style="margin: auto; margin-bottom: 1rem">
+            <a href="{% url 'index' %}">
+              <img
+                src="{% static 'assets/img/7wings-white.png' %}"
+                class=""
+                alt=""
+              />
+            </a>
+          </div>
+          <h1>Resume</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="breadcrumbs">
+    <div class="container">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li>Resume</li>
+        <li><a href="#">Portfolio</a></li>
+      </ol>
+    </div>
+  </nav>
+</div>
+<!-- End Page Title -->
+    <!-- Resume Section -->
+    <section id="resume" class="resume section">
+        <div class='container'>
+            <p>Kindly...</p>
+            <a href="https://drive.google.com/drive/folders/1csFCVIVj7sSqbnHXLAR2K75Md36XYbeB" target="_blank">Download Resume</a>
+        </div>
+    </section>
+    <!-- Resume Section ends -->
+
+{% endblock %}

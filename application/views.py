@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import GeneralInfo, Service
+from .models import GeneralInfo, Service, Frontendskill, Backend_dataskill
 from django.core.mail import send_mail
 from django.conf import settings
 from ckeditor.fields import RichTextField
@@ -25,6 +25,7 @@ def index(request):
         "f_url":general_records.f_url,
         "ig_url":general_records.ig_url,
         "linkedin_url":general_records.linkedin_url,
+        "github_url":general_records.github_url,
         
         "about_title":general_records.about_title,
         "degree":general_records.degree,
@@ -63,6 +64,9 @@ def contact_form(request):
 
 # about page
 def about(request):
+    frontendskills = Frontendskill.objects.all()
+    backendskills = Backend_dataskill.objects.all()
+
     general_records = GeneralInfo.objects.first()
     context = {
         "brand_name": general_records.brand_name,
@@ -75,5 +79,18 @@ def about(request):
         "job_type":general_records.job_type,
         "location":general_records.location,
         "bio":general_records.bio,
+
+        # skills 
+        "frontendskills":frontendskills,
+        "backendskills":backendskills,
     }
     return render(request, "pages/about.html", context)
+
+# Resume page  
+def resume(request):
+    return render(request, 'pages/resume.html', {} )
+
+# Portfolio page
+def portfolio(request):
+    return render(request, 'pages/portfolio.html', {})
+

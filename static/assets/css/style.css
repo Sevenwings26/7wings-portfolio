@@ -11,3 +11,11 @@
     font-style: italic;
     font-size: 12px;
 }
+
+
+.project-view{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
