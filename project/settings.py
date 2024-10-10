@@ -14,15 +14,31 @@ import os
 from pathlib import Path
 from decouple import config
 
+import dj_database_url
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Environment configuration 
+ENVIRONMENT = config('ENVIRONMENT', default="development")
+ENVIRONMENT = "production"
 
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: don't run with debug turned on in production!
+if ENVIRONMENT == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
+
+# Hosting platforms 
+if ENVIRONMENT == "development":
+    ALLOWED_HOSTS = []
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '']
 
 # Application definition
 
@@ -71,19 +87,32 @@ WSGI_APPLICATION = "project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
 
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'portfolio_db',
-        'USER': 'postgres',
-        'PASSWORD': "iarowosola#%4956i",
-        'HOST': 'localhost',
-        'PORT': '5432'
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'portfolio_db',
+#         'USER': 'postgres',
+#         'PASSWORD': "iarowosola#%4956i",
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
+
+
+if ENVIRONMENT == "development":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+else:
+    DATABASES = {
+        'default':dj_database_url.parse(config("DATABASE_URL"))
+    }
 
 
 # Password validation
@@ -115,12 +144,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
 STATICFILES_DIRS = [
     BASE_DIR / 'static/'
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -130,11 +159,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Mail-set up 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'lastborn.ai@gmail.com'
-EMAIL_HOST_PASSWORD = 'hhvhitfyjwvnwqro' # app password...
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') # app password...
 
 
 
