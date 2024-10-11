@@ -15,9 +15,10 @@ def index(request):
 
     general_records = GeneralInfo.objects.first()
     context = {
-        # "brand_name": general_records.brand_name,
-        "brand_name": getattr(general_records, "brand_name"),
-        "username": getattr(general_records, "name"),
+        "brand_name": general_records.brand_name,
+        # "brand_name": getattr(general_records, "brand_name"),
+        # "username": getattr(general_records, "name"),
+        "username": general_records.name,
         "phone": general_records.phone,
         "email": general_records.email,
         "address": general_records.address,
