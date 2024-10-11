@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.utils import timezone
 
+
 # Create your views here.
 def index(request):
     services = Service.objects.all()
@@ -16,54 +17,29 @@ def index(request):
     # Fetch the first general record or None if it doesn't exist
     general_records = GeneralInfo.objects.first()
 
-    # Initialize context with default values if general_records is None
-    if general_records:
-        context = {
-            "brand_name": getattr(general_records, "brand_name", "Default Brand"),
-            "username": general_records.name,
-            "phone": general_records.phone,
-            "email": general_records.email,
-            "address": general_records.address,
-            "description": general_records.description,
-            "title1": general_records.title_one,
-            "title2": general_records.title_two,
-            "title3": general_records.title_three,
-            "title4": general_records.title_four,
-            "x_url": general_records.x_url,
-            "f_url": general_records.f_url,
-            "ig_url": general_records.ig_url,
-            "linkedin_url": general_records.linkedin_url,
-            "github_url": general_records.github_url,
-            "about_title": general_records.about_title,
-            "degree": general_records.degree,
-            "job_type": general_records.job_type,
-            "location": general_records.location,
-            "bio": general_records.bio,
-        }
-    else:
-        # Provide fallback values if general_records is None
-        context = {
-            "brand_name": "Default Brand",
-            "username": "Default Name",
-            "phone": "N/A",
-            "email": "N/A",
-            "address": "N/A",
-            "description": "N/A",
-            "title1": "N/A",
-            "title2": "N/A",
-            "title3": "N/A",
-            "title4": "N/A",
-            "x_url": "#",
-            "f_url": "#",
-            "ig_url": "#",
-            "linkedin_url": "#",
-            "github_url": "#",
-            "about_title": "About Me",
-            "degree": "N/A",
-            "job_type": "N/A",
-            "location": "N/A",
-            "bio": "N/A",
-        }
+    # Initialize context using getattr for all attributes, with default values
+    context = {
+        "brand_name": getattr(general_records, "brand_name", "Default Brand"),
+        "username": getattr(general_records, "name", "Default Name"),
+        "phone": getattr(general_records, "phone", "N/A"),
+        "email": getattr(general_records, "email", "N/A"),
+        "address": getattr(general_records, "address", "N/A"),
+        "description": getattr(general_records, "description", "N/A"),
+        "title1": getattr(general_records, "title_one", "N/A"),
+        "title2": getattr(general_records, "title_two", "N/A"),
+        "title3": getattr(general_records, "title_three", "N/A"),
+        "title4": getattr(general_records, "title_four", "N/A"),
+        "x_url": getattr(general_records, "x_url", "#"),
+        "f_url": getattr(general_records, "f_url", "#"),
+        "ig_url": getattr(general_records, "ig_url", "#"),
+        "linkedin_url": getattr(general_records, "linkedin_url", "#"),
+        "github_url": getattr(general_records, "github_url", "#"),
+        "about_title": getattr(general_records, "about_title", "About Me"),
+        "degree": getattr(general_records, "degree", "N/A"),
+        "job_type": getattr(general_records, "job_type", "N/A"),
+        "location": getattr(general_records, "location", "N/A"),
+        "bio": getattr(general_records, "bio", "N/A"),
+    }
 
     # Add services to the context
     context["services"] = services
@@ -131,28 +107,34 @@ def contact_form(request):
 
 
 # about page
+from django.shortcuts import render
+
 def about(request):
     frontendskills = Frontendskill.objects.all()
     backendskills = Backend_dataskill.objects.all()
 
+    # Fetch the first general record or None if it doesn't exist
     general_records = GeneralInfo.objects.first()
-    context = {
-        "brand_name": general_records.brand_name,
-        "phone": general_records.phone,
-        "email": general_records.email,
-        "description": general_records.description,
-        
-        "about_title":general_records.about_title,
-        "degree":general_records.degree,
-        "job_type":general_records.job_type,
-        "location":general_records.location,
-        "bio":general_records.bio,
 
-        # skills 
-        "frontendskills":frontendskills,
-        "backendskills":backendskills,
+    # Initialize context using getattr for all attributes, with default values
+    context = {
+        "brand_name": getattr(general_records, "brand_name", "Default Brand"),
+        "phone": getattr(general_records, "phone", "N/A"),
+        "email": getattr(general_records, "email", "N/A"),
+        "description": getattr(general_records, "description", "N/A"),
+        "about_title": getattr(general_records, "about_title", "About Me"),
+        "degree": getattr(general_records, "degree", "N/A"),
+        "job_type": getattr(general_records, "job_type", "N/A"),
+        "location": getattr(general_records, "location", "N/A"),
+        "bio": getattr(general_records, "bio", "N/A"),
+
+        # Skills 
+        "frontendskills": frontendskills,
+        "backendskills": backendskills,
     }
+
     return render(request, "pages/about.html", context)
+
 
 # Resume page  
 def resume(request):
