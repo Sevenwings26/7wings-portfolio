@@ -13,36 +13,61 @@ from django.utils import timezone
 def index(request):
     services = Service.objects.all()
 
+    # Fetch the first general record or None if it doesn't exist
     general_records = GeneralInfo.objects.first()
-    context = {
-        # "brand_name": general_records.brand_name,
-        "brand_name": getattr(general_records, "brand_name"),
-        # "username": getattr(general_records, "name"),
-        "username": general_records.name,
-        "phone": general_records.phone,
-        "email": general_records.email,
-        "address": general_records.address,
-        "description": general_records.description,
-        "title1":general_records.title_one,
-        "title2":general_records.title_two,
-        "title3":general_records.title_three,
-        "title4":general_records.title_four,
-        "x_url":general_records.x_url,
-        "f_url":general_records.f_url,
-        "ig_url":general_records.ig_url,
-        "linkedin_url":general_records.linkedin_url,
-        "github_url":general_records.github_url,
-        
-        "about_title":general_records.about_title,
-        "degree":general_records.degree,
-        "job_type":general_records.job_type,
-        "location":general_records.location,
-        "bio":general_records.bio,
 
+    # Initialize context with default values if general_records is None
+    if general_records:
+        context = {
+            "brand_name": getattr(general_records, "brand_name", "Default Brand"),
+            "username": general_records.name,
+            "phone": general_records.phone,
+            "email": general_records.email,
+            "address": general_records.address,
+            "description": general_records.description,
+            "title1": general_records.title_one,
+            "title2": general_records.title_two,
+            "title3": general_records.title_three,
+            "title4": general_records.title_four,
+            "x_url": general_records.x_url,
+            "f_url": general_records.f_url,
+            "ig_url": general_records.ig_url,
+            "linkedin_url": general_records.linkedin_url,
+            "github_url": general_records.github_url,
+            "about_title": general_records.about_title,
+            "degree": general_records.degree,
+            "job_type": general_records.job_type,
+            "location": general_records.location,
+            "bio": general_records.bio,
+        }
+    else:
+        # Provide fallback values if general_records is None
+        context = {
+            "brand_name": "Default Brand",
+            "username": "Default Name",
+            "phone": "N/A",
+            "email": "N/A",
+            "address": "N/A",
+            "description": "N/A",
+            "title1": "N/A",
+            "title2": "N/A",
+            "title3": "N/A",
+            "title4": "N/A",
+            "x_url": "#",
+            "f_url": "#",
+            "ig_url": "#",
+            "linkedin_url": "#",
+            "github_url": "#",
+            "about_title": "About Me",
+            "degree": "N/A",
+            "job_type": "N/A",
+            "location": "N/A",
+            "bio": "N/A",
+        }
 
+    # Add services to the context
+    context["services"] = services
 
-        "services":services,
-    }
     return render(request, "pages/index.html", context)
 
 
