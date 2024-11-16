@@ -45,7 +45,7 @@ class Frontendskill(models.Model):
     value = models.IntegerField()
 
     def __str__(self):
-        return f"Percentage: {self.percentage}"
+        return f"{self.skill}: {self.percentage}"
 
 class Backend_dataskill(models.Model):
     skill = models.CharField(max_length=150, blank=True)
@@ -53,7 +53,7 @@ class Backend_dataskill(models.Model):
     value = models.IntegerField()
 
     def __str__(self):
-        return f"Percentage: {self.percentage}"
+        return f"{self.skill}: {self.percentage}"
 
 
 # Contact Logs - number of times a particular user sent mail 
