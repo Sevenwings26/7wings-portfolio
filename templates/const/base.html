@@ -4,17 +4,13 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Sevenwings</title>
+    {% block title %}  Sevenwings    {% endblock title %}
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 
     <!-- Favicons -->
     {% comment %} <link href="{% static 'assets/img/favicon.png' %}" rel="icon" /> {% endcomment %}
-    <link
-      href="{% static 'assets/img/apple-touch-icon.png' %}"
-      rel="apple-touch-icon"
-    />
-
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon"/>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
@@ -43,8 +39,9 @@
     />
 
     <!-- Main CSS File -->
-    <link href="{% static 'assets/css/base.css' %}" rel="stylesheet" />
-    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+    {% comment %} <link href="{% static 'assets/css/base.css' %}" rel="stylesheet" /> {% endcomment %}
+    <link href="{% static 'assets/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/reform.css' %}" rel="stylesheet" />
   </head>
   <body class="index-page">
 

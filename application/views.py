@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import GeneralInfo, Service, Frontendskill, Backend_dataskill, ContactFormLog
 from ckeditor.fields import RichTextField
 
@@ -45,6 +45,16 @@ def index(request):
     context["services"] = services
 
     return render(request, "pages/index.html", context)
+
+
+def service_detail(request, service_id):
+    titles = Service.objects.all() # get titles
+    service_detail = get_object_or_404(Service, id=service_id)
+    context = {
+        'service':service_detail,
+        'titles':titles
+    }
+    return render(request, 'pages/service-details.html', context)
 
 
 # contact form  

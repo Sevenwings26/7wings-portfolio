@@ -32,7 +32,9 @@ class GeneralInfo(models.Model):
 class Service(models.Model):
     icon = models.CharField(max_length=60)
     title = models.CharField(max_length=60)
-    description = RichTextField()
+    image = models.ImageField(upload_to='service-images/', blank=True, null=True)
+    description = RichTextField(blank=True, null=True)
+    body = RichTextField(blank=True, null=True)
 
     def __str__(self):
         return self.title

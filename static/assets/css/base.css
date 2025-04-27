@@ -8,15 +8,14 @@
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
-  --background-color: #000000; /* Background color for the entire website, including individual sections */
+  --background-color: #652525; /* Background color for the entire website, including individual sections */
   --default-color: #fafafa; /* Default color used for the majority of the text content across the entire website */
   --heading-color: #ffffff; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #18d26e; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #1a1a1a; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #000000; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+  --accent-color: #18d26e;
+  --surface-color: #1a1a1a;
+  --contrast-color: #000000;
 }
 
-/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
   --nav-color: #fafafa;  /* The default color of the main navmenu links */
   --nav-hover-color: #18d26e; /* Applied to main navmenu links when they are hovered over or active */
@@ -1048,7 +1047,8 @@ section,
 # Services Section
 --------------------------------------------------------------*/
 .services .service-item {
-  background-color: var(--surface-color);
+  /* background-color: var(--surface-color); */
+  background-color: #343434;
   text-align: center;
   padding: 80px 20px;
   transition: all ease-in-out 0.3s;
@@ -1059,7 +1059,8 @@ section,
   margin: 0 auto;
   width: 64px;
   height: 64px;
-  background: var(--accent-color);
+  /* background: var(--accent-color); */
+  background: #18d26e;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -1121,6 +1122,9 @@ section,
 .services .service-item:hover p {
   color: var(--contrast-color);
 }
+
+
+
 
 /*--------------------------------------------------------------
 # Service Details Section

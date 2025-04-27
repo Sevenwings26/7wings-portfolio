@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment configuration 
 ENVIRONMENT = config('ENVIRONMENT', default="development")
-ENVIRONMENT = "production"
+# ENVIRONMENT = "production"
 
 
 SECRET_KEY = config('SECRET_KEY')
@@ -165,6 +165,12 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Image management 
+# media files (Images, videos)
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -181,3 +187,4 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') # app password...
 
 
 
+        
