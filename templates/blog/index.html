@@ -1,0 +1,59 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Discover Exclusive Content</h1>
+            <p>Join our community of premium bloggers and readers</p>
+            <button class="btn cta">Start Reading</button>
+        </div>
+    </div>
+</section>
+
+<section class="featured-blogs">
+    <div class="container">
+        <h2>Featured Articles</h2>            
+        <div class="blog-grid" id="blogGrid">
+            {% for blog in blogs %}
+            <div class='blog-card'>
+                <div class="blog-image">
+                    <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                    <div class="blog-actions">
+                        <a href="" class="action-btn edit-btn" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="" class="action-btn delete-btn" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">{{ blog.category }}</span>
+                        <span class="blog-date">{{ blog.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    <h3>{{ blog.title }}</h3>
+                    <p class="blog-author"> {{ blog.admin_author }}</p>
+                    <p class="blog-author">By {{ blog.author }}</p>
+                    <div class="blog-excerpt">
+                        {{ blog.body|truncatechars:150 }}
+                    </div>
+                    <div class="blog-footer">
+                        <a href="{% url 'blog_detail' blog_id=blog.id %}" class="read-more">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+
+
+

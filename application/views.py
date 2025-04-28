@@ -1,3 +1,7 @@
+"""
+    CONTAINS PORTFOLIO LOGICS
+""" 
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import GeneralInfo, Service, Frontendskill, Backend_dataskill, ContactFormLog
 from ckeditor.fields import RichTextField

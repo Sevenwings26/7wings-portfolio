@@ -59,7 +59,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
+    # created app 
     "application",
+    "blog",
+    
+    # text styling 
     "ckeditor",
 ]
 
