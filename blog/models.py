@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-
+from ckeditor.fields import RichTextField  
 
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
@@ -37,7 +37,8 @@ class Blog(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     image = models.ImageField(upload_to='blog-img/', blank=True, null=True)
-    body = models.TextField(blank=True, null=True)
+    # body = models.TextField(blank=True, null=True)
+    body = RichTextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -21,6 +21,8 @@ class CreateBlogForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ['admin_author', 'author', 'category', 'title', 'image', 'body']
-        widgets = {
-            'image': forms.FileInput(attrs={'class': 'form-control'}),
-        }
+
+        
+        # widgets = {
+        #     'image': forms.FileInput(attrs={'class': 'form-control'}),
+        # }
