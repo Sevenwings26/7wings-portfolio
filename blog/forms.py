@@ -1,5 +1,5 @@
 from django import forms
-from .models import Blog, Author, Category
+from .models import Blog, Author, Category, Comment
 
 class CreateBlogForm(forms.ModelForm):
 
@@ -26,3 +26,41 @@ class CreateBlogForm(forms.ModelForm):
         # widgets = {
         #     'image': forms.FileInput(attrs={'class': 'form-control'}),
         # }
+
+
+
+# class CommentForm(forms.ModelForm):
+#     class Meta:
+#         model = Comment
+#         fields = ['name', 'content']
+#         widgets = {
+#             'content': forms.Textarea(attrs={
+#                 'class': 'form-control',
+#                 'rows': 3,
+#                 'placeholder': 'Write your comment here...'
+#             }),
+#         }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('content',)
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'placeholder': 'Write your comment here...'
+            }),
+        }
+
+class ReplyForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('content',)
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 2,
+                'placeholder': 'Write your reply here...'
+            }),
+        }

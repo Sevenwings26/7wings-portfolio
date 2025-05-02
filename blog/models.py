@@ -14,11 +14,6 @@ class Author(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-        # return f"{self.first_name} {self.last_name}" if self.last_name else self.first_name
-
-    # def get_absolute_url(self):
-    #     return reverse('author_detail', kwargs={'pk': self.pk})
-
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
@@ -29,7 +24,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Blog(models.Model):
     admin_author = models.ForeignKey(Author, on_delete=models.CASCADE, blank=True, null=True)   # use later
@@ -45,14 +39,17 @@ class Blog(models.Model):
     def __str__(self):
         return self.title
 
-
-    # on_delete=models.CASCADE - if deleting the author, django will auto delete the author's blog posts on delete of author
-
-    # on_delete=models.PROTECT - if deleting the author, django will not delete the author if the author has blogs.
-
-    # on_delete=models.SET_NULL - if deleting the author, django will make the author column as blank.
-
 class Comment(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    email = models.EmailField()
-    comment = models.TextField()
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.name} - commented on {self.blog.title}"
+
+        
