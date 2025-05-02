@@ -21,6 +21,14 @@ def blog_detail(request, blog_id):
     return render(request, 'blog/read_detail.html', context)
 
 
+def recent_blogs(request):
+    blogs = Blog.objects.all()[:2]
+    context = {
+        'recent_blogs': blogs,
+    }
+    return render(request, 'blog/read_detail.html', context)
+
+
 def create_blog(request):
     form = CreateBlogForm(request.POST, request.FILES)  # request.FILES is added for image upload
     if request.method == "POST":

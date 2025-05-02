@@ -52,3 +52,7 @@ class Blog(models.Model):
 
     # on_delete=models.SET_NULL - if deleting the author, django will make the author column as blank.
 
+class Comment(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    comment = models.TextField()
