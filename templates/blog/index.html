@@ -41,7 +41,6 @@
                     <div class="blog-excerpt">
                         {{ blog.body|truncatechars:150 }}
                     </div>
-                    <a href="{% url 'delete-blog' blog_id=blog.id %}">Delete</a>
                     <div class="blog-footer">
                         <a href="{% url 'blog_detail' blog_id=blog.id %}" class="read-more">
                             Read More <i class="fas fa-arrow-right"></i>

@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Blog, Author, Category, Comment
-from .forms import CreateBlogForm, CommentForm
+from .forms import CreateBlogForm, CommentForm, ReplyForm
 
 
 def blog_index(request):
@@ -14,50 +14,49 @@ def blog_index(request):
     }
     return render(request, 'blog/index.html', context)
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 def blog_detail(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
-    comments = Comment.objects.all()
-    # post comment 
-    form = CommentForm(request.POST)
-    if request.method == "POST" and request.headers.get('x-requested-with') == "XMLHttpRequest":
-        if form.is_valid():
-            comment = form.save(commit=True)
-            comment.blog = blog
-            comment.save()
-            return JsonResponse({
-                'name':comment.name,
-                'content':comment.content,
-                'created-at':comment.created_at.strftime('%b %d, %Y %H:%M')
-            })
+    comments = Comment.objects.filter(blog=blog, parent__isnull=True)
+
+    # forms 
+    comment_form = CommentForm()
+    reply_form = ReplyForm()
+
+    # if request.method == "POST" and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+    #     form = CommentForm(request.POST)
+    #     if form.is_valid():
+    #         comment = form.save(commit=False)
+    #         comment.blog = blog
+    #         parent_id = request.POST.get('parent_id')
+    #         if parent_id:
+    #             comment.parent = Comment.objects.get(id=parent_id)
+    #         comment.save()
+    #         return JsonResponse({
+    #             'name': comment.name,
+    #             'content': comment.content,
+    #             'created_at': comment.created_at.strftime("%b %d, %Y %H:%M"),
+    #             'parent_id': parent_id
+    #         })
+
     context = {
         'blog': blog,
-        'form':form,
-        'comments':comments,
+        'comments': comments,
+        'comment_form': comment_form,
+        'reply_form': reply_form,
+        # 'like_count': blog.likes.count()
     }
+
     return render(request, 'blog/read_detail.html', context)
 
-
-def post_comment(request, post_id):
-    post = get_object_or_404(BlogPost, id=post_id)
-    form = CommentForm(request.POST)
-    
-    if form.is_valid():
-        comment = form.save(commit=False)
-        comment.post = post
-        # comment.author = request.user
-        comment.save()
-        
-        return JsonResponse({
-            'success': True,
-            'comment_id': comment.id,
-            'author': comment.author.username,
-            'content': comment.content,
-            'created_at': comment.created_at.strftime("%B %d, %Y, %I:%M %p"),
-            'avatar_url': comment.author.profile.avatar.url if hasattr(comment.author, 'profile') else '/static/images/default-avatar.jpg',
-        })
-    
-    return JsonResponse({'success': False, 'errors': form.errors})
-
+# @csrf_exempt
+# def like_blog(request, blog_id):
+#     blog = get_object_or_404(Blog, pk=blog_id)
+#     ip = request.META.get('REMOTE_ADDR')
+#     like, created = Like.objects.get_or_create(blog=blog, ip_address=ip)
+#     return JsonResponse({'like_count': blog.likes.count()})
 
 
 
@@ -107,3 +106,53 @@ def delete_blog(request, blog_id):
 
 
     
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
+@require_POST
+def post_comment(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    form = CommentForm(request.POST)
+    
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.blog = blog
+        comment.save()
+        
+        return JsonResponse({
+            'success': True,
+            'comment_id': comment.id,
+            'name': comment.name,
+            'content': comment.content,
+            'created_at': comment.created_at.strftime("%B %d, %Y, %I:%M %p"),
+            'is_reply': False,
+        })
+    return JsonResponse({'success': False, 'errors': form.errors})
+
+
+@require_POST
+def post_reply(request, blog_id, comment_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    parent_comment = get_object_or_404(Comment, pk=comment_id)
+    form = ReplyForm(request.POST)
+    
+    if form.is_valid():
+        reply = form.save(commit=False)
+        reply.blog = blog
+        reply.parent = parent_comment
+        if request.user.is_authenticated and request.user == blog.admin_author:
+            reply.name = blog.admin_author.get_full_name() or blog.admin_author.username
+            reply.is_author_reply = True
+        reply.save()
+        
+        return JsonResponse({
+            'success': True,
+            'comment_id': reply.id,
+            'name': reply.name,
+            'content': reply.content,
+            'created_at': reply.created_at.strftime("%B %d, %Y, %I:%M %p"),
+            'is_reply': True,
+            'is_author_reply': reply.is_author_reply,
+        })
+    
+    return JsonResponse({'success': False, 'errors': form.errors})

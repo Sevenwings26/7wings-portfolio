@@ -5,7 +5,7 @@ class CreateBlogForm(forms.ModelForm):
 
     category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
 
-    admin_author = forms.ModelChoiceField(
+    author = forms.ModelChoiceField(
         queryset=Author.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
@@ -20,32 +20,21 @@ class CreateBlogForm(forms.ModelForm):
     
     class Meta:
         model = Blog
-        fields = ['admin_author', 'author', 'category', 'title', 'image', 'body']
+        fields = ['author', 'category', 'title', 'image', 'body']
 
         
-        # widgets = {
-        #     'image': forms.FileInput(attrs={'class': 'form-control'}),
-        # }
-
-
-
-# class CommentForm(forms.ModelForm):
-#     class Meta:
-#         model = Comment
-#         fields = ['name', 'content']
-#         widgets = {
-#             'content': forms.Textarea(attrs={
-#                 'class': 'form-control',
-#                 'rows': 3,
-#                 'placeholder': 'Write your comment here...'
-#             }),
-#         }
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('content',)
+        fields = ['name', 'content']
         widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'rows': 3,
+                'placeholder': 'Name...'
+            }),
+            
             'content': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 3,

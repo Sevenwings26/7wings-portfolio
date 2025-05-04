@@ -1,0 +1,30 @@
+<div class="comment" id="comment-{{ comment.id }}">
+    <div class="comment-author">
+        <div>
+            <h5>{{ comment.name }}</h5>
+            <span class="comment-date"><i class="far fa-clock"></i> {{ comment.created_at|date:"F j, Y, g:i a" }}</span>
+        </div>
+    </div>
+    <div class="comment-text">
+        <p>{{ comment.content }}</p>
+    </div>
+    <a href="#" class="reply-btn" data-comment-id="{{ comment.id }}">
+        <i class="fas fa-reply"></i> Reply
+    </a>
+    
+    <div class="replies-container" id="replies-{{ comment.id }}">
+        {% for reply in comment.replies.all %}
+            <div class="comment reply {% if reply.is_author_reply %}author-reply{% endif %}" id="comment-{{ reply.id }}">
+                <div class="comment-author">
+                    <div>
+                        <h5>{{ reply.name }}</h5>
+                        <span class="comment-date"><i class="far fa-clock"></i> {{ reply.created_at|date:"F j, Y, g:i a" }}</span>
+                    </div>
+                </div>
+                <div class="comment-text">
+                    <p>{{ reply.content }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -26,12 +26,11 @@ class Category(models.Model):
         return self.name
 
 class Blog(models.Model):
-    admin_author = models.ForeignKey(Author, on_delete=models.CASCADE, blank=True, null=True)   # use later
-    author = models.CharField(max_length=150, blank=True, null=True)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, blank=True, null=True)   # use later
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
+    description = models.CharField(max_length=150, blank=True, null=True)
     image = models.ImageField(upload_to='blog-img/', blank=True, null=True)
-    # body = models.TextField(blank=True, null=True)
     body = RichTextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -40,9 +39,11 @@ class Blog(models.Model):
         return self.title
 
 class Comment(models.Model):
-    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="comments")
     name = models.CharField(max_length=200)
     content = models.TextField()
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name="replies")
+    is_author_reply = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -52,4 +53,5 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.name} - commented on {self.blog.title}"
 
-        
+class like(models.Model):
+    pass

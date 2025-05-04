@@ -805,6 +805,47 @@ footer {
     transform: translateY(-2px);
 }
 
+
+/* Reply Form */
+.reply-form-container {
+    margin-top: 15px;
+    padding-left: 30px;
+    border-left: 2px solid #eee;
+}
+
+.reply-form textarea {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.cancel-btn {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Replies */
+.replies-container {
+    margin-top: 15px;
+    padding-left: 20px;
+    border-left: 2px solid #eee;
+}
+
+.comment.reply {
+    margin-bottom: 15px;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+} */
+
+
 /* Sidebar */
 .sidebar {
     position: sticky;
