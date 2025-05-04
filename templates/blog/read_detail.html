@@ -36,11 +36,6 @@
                         </ul>
                     </div>
                     
-                    {% comment %} <div class="blog-content">
-                        {{ blog.body|safe }}
-
-                    </div> {% endcomment %}
-                    
                     <div class="blog-content">
                         {{ blog.body|safe }}
 
@@ -86,7 +81,7 @@
                         
                          <!-- Comments Section -->
                         <div class="comments-section">
-                            <h3 class="comments-title"><i class="far fa-comments"></i> <span id="comments-count">{{ comments.count }}</span> Comments</h3>
+                            <h3 class="comments-title"><i class="far fa-comments"></i> <span id="comments-count">{{ comments.count }}</span>  Comments</h3>
                             
                             <!-- Comment List -->
                             <div class="comment-list" id="comments-container">
@@ -110,22 +105,24 @@
                             </div>
                         </div>
                         
-                        <!-- Hidden Reply Form Template -->
-                        <div id="reply-form-template" style="display:none;">
-                            <form class="reply-form" method="post">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <textarea class="form-control" name="content" rows="2" placeholder="Write your reply here..." required></textarea>
-                                </div>
-                                <button type="submit" class="submit-btn">Post Reply <i class="fas fa-reply"></i></button>
-                            </form>
-                        </div>
-                </article>
-            </div>
-            
+<!-- Hidden reply form template or dynamic form creation -->
+<div id="reply-form-template" style="display:none;">
+    <form class="reply-form" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ reply_form.content }}
+        </div>
+        <button type="submit" class="submit-btn" data-comment-id="{{ comment.id }}" data-blog-id="{{ blog.id }}">Post Reply</button>
+    </form>
+</div>
 
 
+</article>
+</div>
             
+
+        
+    <!--Recent Posts-->
     <div class="col-lg-4">
         <div class="sidebar">
             <div class="sidebar-widget">
@@ -143,6 +140,7 @@
                 </div>
             </div>
             
+          <!--Shuffle recents-->>
             <div class="sidebar-widget">
                 <h3 class="sidebar-title">Tags</h3>
                 <div class="tags">
@@ -194,8 +192,77 @@
     </script> {% endcomment %}
 
     <script>
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.reply-btn')) {
+                e.preventDefault();
+        
+                const btn = e.target.closest('.reply-btn');
+                const commentId = btn.dataset.commentId;
+                const blogId = btn.dataset.blogId;
+        
+                const replyContainer = document.getElementById(`replies-${commentId}`);
+        
+                // Only remove the existing reply form, not the replies
+                const existingForm = replyContainer.querySelector('.reply-form');
+                if (existingForm) {
+                    existingForm.remove();
+                }
+        
+                const replyFormWrapper = document.createElement('div');
+                replyFormWrapper.innerHTML = document.getElementById('reply-form-template').innerHTML;
+                const form = replyFormWrapper.querySelector('form');
+        
+                // 👇 Set the correct action dynamically
+                form.action = `/blog/post/${commentId}/reply/`;
+        
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const formData = new FormData(form);
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const newReply = createReplyElement(data);
+                            replyContainer.appendChild(newReply); // Append without clearing
+                            form.remove(); // Remove only the form
+                        } else {
+                            alert("Reply failed to post.");
+                        }
+                    })
+                    .catch(err => console.error(err));
+                });
+        
+                replyContainer.appendChild(replyFormWrapper);
+            }
+        });
+
+        // Function to create reply element
+    function createReplyElement(data) {
+        const replyDiv = document.createElement('div');
+        replyDiv.className = `comment reply ${data.is_author_reply ? 'author-reply' : ''}`;
+        replyDiv.id = `comment-${data.comment_id}`;
+        replyDiv.innerHTML = `
+            <div class="comment-author">
+                <div>
+                    <h5>${data.name}${data.is_author_reply ? ' <span class="author-badge">Author</span>' : ''}</h5>
+                    <span class="comment-date"><i class="far fa-clock"></i> ${data.created_at}</span>
+                </div>
+            </div>
+            <div class="comment-text">
+                <p>${data.content}</p>
+            </div>
+        `;
+        return replyDiv;
+    }
+
+    // Comment form submission
     document.addEventListener('DOMContentLoaded', function() {
-     // Comment form submission
         const commentForm = document.getElementById('comment-form');
         if (commentForm) {
             commentForm.addEventListener('submit', function(e) {

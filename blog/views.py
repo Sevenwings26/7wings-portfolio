@@ -130,29 +130,83 @@ def post_comment(request, blog_id):
     return JsonResponse({'success': False, 'errors': form.errors})
 
 
-@require_POST
-def post_reply(request, blog_id, comment_id):
-    blog = get_object_or_404(Blog, pk=blog_id)
-    parent_comment = get_object_or_404(Comment, pk=comment_id)
-    form = ReplyForm(request.POST)
+# @require_POST
+# def post_reply(request, blog_id, comment_id):
+#     blog = get_object_or_404(Blog, pk=blog_id)
+#     parent_comment = get_object_or_404(Comment, pk=comment_id)
+#     form = ReplyForm(request.POST)
     
-    if form.is_valid():
-        reply = form.save(commit=False)
-        reply.blog = blog
-        reply.parent = parent_comment
-        if request.user.is_authenticated and request.user == blog.admin_author:
-            reply.name = blog.admin_author.get_full_name() or blog.admin_author.username
-            reply.is_author_reply = True
-        reply.save()
+#     if form.is_valid():
+#         reply = form.save(commit=False)
+#         reply.blog = blog
+#         reply.parent = parent_comment
+#         if request.user.is_authenticated and request.user == blog.admin_author:
+#             reply.name = blog.admin_author.get_full_name() or blog.admin_author.username
+#             reply.is_author_reply = True
+#         reply.save()
         
-        return JsonResponse({
-            'success': True,
-            'comment_id': reply.id,
-            'name': reply.name,
-            'content': reply.content,
-            'created_at': reply.created_at.strftime("%B %d, %Y, %I:%M %p"),
-            'is_reply': True,
-            'is_author_reply': reply.is_author_reply,
-        })
+#         return JsonResponse({
+#             'success': True,
+#             'comment_id': reply.id,
+#             'name': reply.name,
+#             'content': reply.content,
+#             'created_at': reply.created_at.strftime("%B %d, %Y, %I:%M %p"),
+#             'is_reply': True,
+#             'is_author_reply': reply.is_author_reply,
+#         })
     
-    return JsonResponse({'success': False, 'errors': form.errors})
+#     return JsonResponse({'success': False, 'errors': form.errors})
+
+
+# @require_POST
+# from django.http import JsonResponse
+# from .models import Comment
+# from .forms import CommentForm
+
+# def post_reply(request, parent_id):
+#     if request.method == 'POST' and request.is_ajax():
+#         parent = Comment.objects.get(id=parent_id)
+#         form = ReplyForm(request.POST)
+#         if form.is_valid():
+#             reply = form.save(commit=False)
+#             reply.parent = parent
+#             reply.blog = parent.blog
+#             reply.save()
+
+#             return JsonResponse({
+#                 'success': True,
+#                 'comment_id': reply.id,
+#                 'name': reply.name,
+#                 'content': reply.content,
+#                 'created_at': reply.created_at.strftime('%Y-%m-%d %H:%M'),
+#                 'is_author_reply': False
+#             })
+#     return JsonResponse({'success': False}, status=400)
+
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from .forms import ReplyForm
+
+@csrf_exempt  # or use @csrf_protect + pass CSRF in JS
+def post_reply(request, comment_id):
+    if request.method == 'POST':
+        parent = get_object_or_404(Comment, id=comment_id)
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.parent = parent
+            reply.blog = parent.blog
+            # If you want to include the user's name, set it here
+            # reply.name = request.user.username if request.user.is_authenticated else 'Anonymous'
+            reply.save()
+
+            return JsonResponse({
+                'success': True,
+                'comment_id': reply.id,
+                'name': reply.name or 'Anonymous',
+                'content': reply.content,
+                'created_at': reply.created_at.strftime('%Y-%m-%d %H:%M'),
+                'is_author_reply': False
+            })
+    return JsonResponse({'success': False}, status=400)
+

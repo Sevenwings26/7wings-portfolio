@@ -11,7 +11,7 @@ urlpatterns = [
     # comment 
     # path('post-comment/<int:post_id>', views.post_comment, name="post_comment"), 
     path('<int:blog_id>/comment/', views.post_comment, name='post_comment'),
-    path('<int:blog_id>/<int:comment_id>/reply/', views.post_reply, name='post_reply'),
+    path('post/<int:comment_id>/reply/', views.post_reply, name='post_reply'),
     # path('<int:blog_id>/like/', views.like_blog, name='like_blog'),
 ]
 
