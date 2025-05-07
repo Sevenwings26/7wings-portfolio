@@ -9,7 +9,8 @@
     --black-color: #000;
 }
 
-* {
+/* Container Styles */
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -27,42 +28,6 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
-}
-
-.btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn.login {
-    background: transparent;
-    color: var(--dark-color);
-    margin-right: 10px;
-}
-
-.btn.signup {
-    background: var(--primary-color);
-    color: var(--white-color);
-}
-
-.btn.signup:hover {
-    background: var(--secondary-color);
-}
-
-.btn.cta {
-    background: var(--primary-color);
-    color: var(--white-color);
-    padding: 12px 25px;
-    font-size: 1rem;
-    margin-top: 20px;
-}
-
-.btn.cta:hover {
-    background: var(--secondary-color);
 }
 
 
@@ -184,6 +149,165 @@ nav ul li a:hover, nav ul li a.active {
         right: 15px;
     }
 }
+
+
+/*********************
+ Authentication Forms 
+*********************/
+
+/* Auth Container */
+.auth-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    margin-top: 10rem;
+    padding: 2rem;
+    background: var(--white-color);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.auth-container p {
+    color: var(--gray-color);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Form Styles */
+.auth-container form {
+    margin-top: 1.5rem;
+}
+
+.auth-container .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.auth-container label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.auth-container input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+    outline: none;
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 1rem;
+}
+
+.auth-container button:hover {
+    background: var(--secondary-color);
+}
+
+/* Messages/Alerts */
+.messages {
+    margin-bottom: 2rem;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.alert-success {
+    background: #e6f7ee;
+    color: #2e7d32;
+    border-left: 4px solid #4caf50;
+}
+
+.alert-error {
+    background: #ffebee;
+    color: #c62828;
+    border-left: 4px solid #f44336;
+}
+
+.alert-info {
+    background: #e3f2fd;
+    color: #1565c0;
+    border-left: 4px solid #2196f3;
+}
+
+.alert i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.alert .close-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0 0.5rem;
+}
+
+/* Auth Footer */
+.auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--gray-color);
+}
+
+.auth-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 0.3rem;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .auth-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .auth-container h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/*********************
+ Authentication Forms styling end
+*********************/
 
 
 

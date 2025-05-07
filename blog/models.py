@@ -26,7 +26,7 @@ class Category(models.Model):
         return self.name
 
 class Blog(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, blank=True, null=True)   # use later
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
     description = models.CharField(max_length=150, blank=True, null=True)
@@ -35,8 +35,13 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    # update - like and dislike
+    likes = models.PositiveIntegerField(default=0)
+    dislikes = models.PositiveIntegerField(default=0)
+
     def __str__(self):
         return self.title
+
 
 class Comment(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="comments")
@@ -55,3 +60,4 @@ class Comment(models.Model):
 
 class like(models.Model):
     pass
+

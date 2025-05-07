@@ -1,0 +1,72 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <i class="fas 
+                {% if message.tags == 'success' %}fa-check-circle{% endif %}
+                {% if message.tags == 'error' %}fa-exclamation-circle{% endif %}
+                {% if message.tags == 'info' %}fa-info-circle{% endif %}
+            "></i>
+            {{ message }}
+            <button class="close-btn" onclick="this.parentElement.style.display='none'">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h1>Create Account</h1>
+    <p>Join our community today</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+            <small class="form-text">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+            <div class="alert alert-error" style="margin-top: 5px; padding: 8px;">
+                <i class="fas fa-exclamation-circle"></i> {{ error }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        
+        <button type="submit">
+            <i class="fas fa-user-plus"></i> Sign Up
+        </button>
+    </form>
+    
+    <div class="auth-footer">
+        Already have an account? <a href="">Login</a>
+    </div>
+</div>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-hide messages after 5 seconds
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 300);
+        }, 5000);
+    });
+});
+</script>
+{% endblock %}

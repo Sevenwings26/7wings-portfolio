@@ -63,9 +63,11 @@ INSTALLED_APPS = [
     # created app 
     "application",
     "blog",
+    "acct",
     
     # text styling 
     "ckeditor",
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -102,6 +104,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "project.wsgi.application"
 
+# ckeditor 
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+    },
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -120,6 +132,7 @@ WSGI_APPLICATION = "project.wsgi.application"
 #     }
 # }
 
+AUTH_USER_MODEL = "acct.CustomUser"
 
 if ENVIRONMENT == "development":
     DATABASES = {
@@ -181,9 +194,12 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 # Mail-set up 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+if ENVIRONMENT == "development":
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_HOST = "smtp.googlemail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

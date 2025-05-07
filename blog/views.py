@@ -4,6 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Blog, Author, Category, Comment
 from .forms import CreateBlogForm, CommentForm, ReplyForm
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
 
 
 def blog_index(request):
@@ -14,8 +18,6 @@ def blog_index(request):
     }
     return render(request, 'blog/index.html', context)
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 
 def blog_detail(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
@@ -25,22 +27,6 @@ def blog_detail(request, blog_id):
     comment_form = CommentForm()
     reply_form = ReplyForm()
 
-    # if request.method == "POST" and request.headers.get('x-requested-with') == 'XMLHttpRequest':
-    #     form = CommentForm(request.POST)
-    #     if form.is_valid():
-    #         comment = form.save(commit=False)
-    #         comment.blog = blog
-    #         parent_id = request.POST.get('parent_id')
-    #         if parent_id:
-    #             comment.parent = Comment.objects.get(id=parent_id)
-    #         comment.save()
-    #         return JsonResponse({
-    #             'name': comment.name,
-    #             'content': comment.content,
-    #             'created_at': comment.created_at.strftime("%b %d, %Y %H:%M"),
-    #             'parent_id': parent_id
-    #         })
-
     context = {
         'blog': blog,
         'comments': comments,
@@ -48,16 +34,7 @@ def blog_detail(request, blog_id):
         'reply_form': reply_form,
         # 'like_count': blog.likes.count()
     }
-
     return render(request, 'blog/read_detail.html', context)
-
-# @csrf_exempt
-# def like_blog(request, blog_id):
-#     blog = get_object_or_404(Blog, pk=blog_id)
-#     ip = request.META.get('REMOTE_ADDR')
-#     like, created = Like.objects.get_or_create(blog=blog, ip_address=ip)
-#     return JsonResponse({'like_count': blog.likes.count()})
-
 
 
 def recent_blogs(request):
@@ -130,62 +107,6 @@ def post_comment(request, blog_id):
     return JsonResponse({'success': False, 'errors': form.errors})
 
 
-# @require_POST
-# def post_reply(request, blog_id, comment_id):
-#     blog = get_object_or_404(Blog, pk=blog_id)
-#     parent_comment = get_object_or_404(Comment, pk=comment_id)
-#     form = ReplyForm(request.POST)
-    
-#     if form.is_valid():
-#         reply = form.save(commit=False)
-#         reply.blog = blog
-#         reply.parent = parent_comment
-#         if request.user.is_authenticated and request.user == blog.admin_author:
-#             reply.name = blog.admin_author.get_full_name() or blog.admin_author.username
-#             reply.is_author_reply = True
-#         reply.save()
-        
-#         return JsonResponse({
-#             'success': True,
-#             'comment_id': reply.id,
-#             'name': reply.name,
-#             'content': reply.content,
-#             'created_at': reply.created_at.strftime("%B %d, %Y, %I:%M %p"),
-#             'is_reply': True,
-#             'is_author_reply': reply.is_author_reply,
-#         })
-    
-#     return JsonResponse({'success': False, 'errors': form.errors})
-
-
-# @require_POST
-# from django.http import JsonResponse
-# from .models import Comment
-# from .forms import CommentForm
-
-# def post_reply(request, parent_id):
-#     if request.method == 'POST' and request.is_ajax():
-#         parent = Comment.objects.get(id=parent_id)
-#         form = ReplyForm(request.POST)
-#         if form.is_valid():
-#             reply = form.save(commit=False)
-#             reply.parent = parent
-#             reply.blog = parent.blog
-#             reply.save()
-
-#             return JsonResponse({
-#                 'success': True,
-#                 'comment_id': reply.id,
-#                 'name': reply.name,
-#                 'content': reply.content,
-#                 'created_at': reply.created_at.strftime('%Y-%m-%d %H:%M'),
-#                 'is_author_reply': False
-#             })
-#     return JsonResponse({'success': False}, status=400)
-
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from .forms import ReplyForm
 
 @csrf_exempt  # or use @csrf_protect + pass CSRF in JS
 def post_reply(request, comment_id):
@@ -209,4 +130,28 @@ def post_reply(request, comment_id):
                 'is_author_reply': False
             })
     return JsonResponse({'success': False}, status=400)
+
+# likes and dislike  
+# avoid for @csrf_exempt
+def like_blog(request, blog_id):
+    blog = Blog.objects.get(pk=blog_id)
+    session_key = f"liked_{blog_id}"
+    
+    if not request.session.get(session_key, False):
+        blog.likes += 1
+        blog.save()
+        request.session[session_key] = True  # To prevent multiple likes
+    
+    return JsonResponse({'likes': blog.likes, 'dislikes': blog.dislikes})
+
+def dislike_blog(request, blog_id):
+    blog = Blog.objects.get(pk=blog_id)
+    session_key = f"liked_{blog_id}"
+    
+    if not request.session.get(session_key, False):
+        blog.likes += 1
+        blog.save()
+        request.session[session_key] = True  # To prevent multiple likes
+    
+    return JsonResponse({'likes': blog.likes, 'dislikes': blog.dislikes})
 

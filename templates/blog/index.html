@@ -39,7 +39,7 @@
                     <p class="blog-author"> {{ blog.admin_author }}</p>
                     <p class="blog-author">By {{ blog.author }}</p>
                     <div class="blog-excerpt">
-                        {{ blog.body|truncatechars:150 }}
+                        {{ blog.body|truncatechars:150|safe }}
                     </div>
                     <div class="blog-footer">
                         <a href="{% url 'blog_detail' blog_id=blog.id %}" class="read-more">

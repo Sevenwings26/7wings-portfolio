@@ -1,5 +1,6 @@
 from django import forms
 from .models import Blog, Author, Category, Comment
+from ckeditor.widgets import CKEditorWidget
 
 class CreateBlogForm(forms.ModelForm):
 
@@ -10,12 +11,8 @@ class CreateBlogForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
-    # title = forms.CharField(
-    #     widget=forms.TextInput(attrs={'class': 'form-control'})
-    # )
-
     # body = forms.CharField(
-    #     widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5})
+    #     widget=CKEditorWidget()  # WYSIWYG - What You See is What You Get..
     # )
     
     class Meta:
