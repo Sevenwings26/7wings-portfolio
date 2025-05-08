@@ -1,12 +1,12 @@
 asgiref==3.8.1
-backports.zoneinfo==0.2.1;python_version<"3.9"
 dj-database-url==2.2.0
 Django==4.2.15
 django-ckeditor==6.7.1
 django-js-asset==2.2.0
 gunicorn==23.0.0
 packaging==24.1
-psycopg2==2.9.9
+pillow==11.2.1
+# psycopg2==2.9.9
 psycopg2-binary==2.9.9
 python-decouple==3.8
 sqlparse==0.5.1

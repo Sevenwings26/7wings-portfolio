@@ -1,8 +1,10 @@
 from django.urls import path 
 from . import views
+# from .views import BlogIndex
 
 urlpatterns = [
-    path('site/', views.blog_index, name="blog-site"),
+    # path('site/', views.blog_index, name="blog-site"),
+    path('site/', views.BlogIndex.as_view(), name="blog-site"),
     path('read/<int:blog_id>/', views.blog_detail, name="blog_detail"),
     path('create/', views.create_blog, name="create-blog"),    
     path('update/<int:blog_id>', views.update_blog, name="update-blog"),    

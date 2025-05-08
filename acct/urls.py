@@ -3,6 +3,6 @@ from . import views
 
 urlpatterns = [
     path("sign-up/", views.register_view, name="register"),       
-    # path("verify/<str:token:>/", views.verify_email_view, name="verify_email"),       
+    path("activate/<uidb64>/<token>/", views.activate_account, name="activate"),
 ]
 

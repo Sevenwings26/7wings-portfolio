@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment configuration 
 ENVIRONMENT = config('ENVIRONMENT', default="development")
-ENVIRONMENT = "production"
+# ENVIRONMENT = "production"
 
 
 SECRET_KEY = config('SECRET_KEY')
@@ -32,7 +32,7 @@ SECRET_KEY = config('SECRET_KEY')
 if ENVIRONMENT == 'development':
     DEBUG = True
 else:
-    DEBUG = True
+    DEBUG = False
 
 # ALLOWED_HOSTS = []
 
@@ -82,6 +82,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
      "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
+
 
 # Use WhiteNoise to serve static files in production
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -135,6 +136,7 @@ CKEDITOR_CONFIGS = {
 # }
 
 AUTH_USER_MODEL = "acct.CustomUser"
+
 
 if ENVIRONMENT == "development":
     DATABASES = {
@@ -197,17 +199,19 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Mail-set up 
-if ENVIRONMENT == "development":
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# if ENVIRONMENT == "development":
+#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# else:
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.googlemail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') # app password...
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 
+
+# backports.zoneinfo==0.2.1;python_version<"3.9"
 
 
         

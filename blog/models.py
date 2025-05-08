@@ -3,6 +3,16 @@ from django.urls import reverse
 from django.utils import timezone
 from ckeditor.fields import RichTextField  
 
+
+
+# Authentication and Authorization 
+# Custom Auth 
+from django.contrib.auth.models import BaseUserManager, UserManager, PermissionsMixin
+
+
+
+
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100, null=True, blank=True)
@@ -60,4 +70,6 @@ class Comment(models.Model):
 
 class like(models.Model):
     pass
+
+
 

@@ -8,15 +8,32 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+from django.views.generic import TemplateView, ListView  
+from django.views import View
 
 
-def blog_index(request):
-    blogs = Blog.objects.all().order_by('-created_at')  # Retrieve Latest blog
-    context = {
-        'blogs': blogs,
-        # 'categories': categories
-    }
-    return render(request, 'blog/index.html', context)
+# Class-based views
+class BlogIndex(TemplateView):
+    template_name = "blog/index.html"
+
+class BlogIndex(View):
+    def get(self, request):  # method get
+        blogs = Blog.objects.all().order_by('-created_at')  # Retrieve Latest blog
+        context = {
+            'blogs': blogs,
+            # 'categories': categories
+        }
+        return render(request, 'blog/index.html', context)
+
+
+
+# def blog_index(request):
+#     blogs = Blog.objects.all().order_by('-created_at')  # Retrieve Latest blog
+#     context = {
+#         'blogs': blogs,
+#         # 'categories': categories
+#     }
+#     return render(request, 'blog/index.html', context)
 
 
 def blog_detail(request, blog_id):
@@ -43,7 +60,7 @@ def recent_blogs(request):
         'recent_blogs': blogs,
     }
     return render(request, 'blog/read_detail.html', context)
-
+    
 
 def create_blog(request):
     form = CreateBlogForm(request.POST, request.FILES)  # request.FILES is added for image upload

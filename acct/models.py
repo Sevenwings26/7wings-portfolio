@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
+
 class UserManager(BaseUserManager):
     def create_user(self, first_name, last_name, email, password=None, **extra_fields):
         if not email:
@@ -16,6 +17,7 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(first_name, last_name, email, password, **extra_fields)
 
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -26,7 +28,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email'   # it replaces the username
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):

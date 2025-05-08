@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 15px;
+            font-size: 24px;
+        }
+        .content {
+            background-color: #333;
+            padding: 20px;
+            line-height: 1.6;
+            color: #fff;
+        }
+        .content p {
+            margin: 10px 0;
+        }
+        .footer {
+            /* background-color: #f4f4f4; */
+            text-align: center;
+            font-size: 12px;
+            color: #000;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>LOGO</h1>
+        </div>
+        <div class="content">
+            <h1>Hello, {{ first_name }}!</h1>
+            <p>Thank you for registering. Please verify your email address by clicking the link below:</p>
+            <a href="{{ verification_link }}">Verify Email</a>
+            <p>If you did not register, please ignore this email.</p>
+        </div>
+    </div>
+</body>
+</html>
+
