@@ -2,25 +2,32 @@ from django import forms
 from .models import Blog, Author, Category, Comment
 from ckeditor.widgets import CKEditorWidget
 
-class CreateBlogForm(forms.ModelForm):
+# class CreateBlogForm(forms.ModelForm):
+#     category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
+#     author = forms.ModelChoiceField(
+#         queryset=Author.objects.all(),
+#         # widget=forms.Select(attrs={'class': 'form-control'})
+#     )
 
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
-
-    author = forms.ModelChoiceField(
-        queryset=Author.objects.all(),
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-
-    # body = forms.CharField(
-    #     widget=CKEditorWidget()  # WYSIWYG - What You See is What You Get..
-    # )
+#     # body = forms.CharField(
+#     #     widget=CKEditorWidget()  # WYSIWYG - What You See is What You Get..
+#     # )
     
+#     class Meta:
+#         model = Blog
+#         fields = ['author', 'category', 'title', 'image', 'body']
+
+class CreateBlogForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ['author', 'category', 'title', 'image', 'body']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 'rows': 6}),
+        }
 
         
-
+# Comment form 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
@@ -39,6 +46,7 @@ class CommentForm(forms.ModelForm):
             }),
         }
 
+# Reply form                                       
 class ReplyForm(forms.ModelForm):
     class Meta:
         model = Comment

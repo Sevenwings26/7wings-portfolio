@@ -2,14 +2,48 @@
 {% load static %}
 
 {% block content %}
+<section class="create-blog-section">
+    <div class="container">
+        <h2 class="form-heading">Update Blog</h2>
+        <form method="POST" enctype="multipart/form-data" class="create-blog-form"><br><br>
 
-<br><br><br><br>
-<h1>Update Blog </h1>
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}     
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-</form>
+            {% csrf_token %}
+            <div class="form-grid">
+                {{ form.non_field_errors }}
+                
+                <div class="form-group">
+                    {{ form.author.label_tag }}
+                    {{ form.author }}
+                    {{ form.author.errors }}
+                </div>
 
+                <div class="form-group">
+                    {{ form.category.label_tag }}
+                    {{ form.category }}
+                    {{ form.category.errors }}
+                </div>
 
+                <div class="form-group" style="width: 500px;">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                    {{ form.title.errors }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.image.label_tag }}
+                    {{ form.image }}
+                    {{ form.image.errors }}
+                </div>
+                <div>Body:</div>
+                <div class="form-group full-width">
+                    <span style="display: none;">{{ form.body.label_tag }}</span>
+                    {{ form.body }}
+                    {{ form.body.errors }}
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" style="background-color: black; margin-bottom: 2rem;">Submit Blog</button>
+        </form>
+    </div>
+</section>
 {% endblock content %}

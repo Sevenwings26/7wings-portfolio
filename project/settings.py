@@ -24,7 +24,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ENVIRONMENT = config('ENVIRONMENT', default="development")
 ENVIRONMENT = "production"
 
-
 SECRET_KEY = config('SECRET_KEY')
 
 # DEBUG = True

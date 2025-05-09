@@ -310,7 +310,6 @@ nav ul li a:hover, nav ul li a.active {
 *********************/
 
 
-
 /* Hero Section */
 .hero {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
@@ -595,15 +594,81 @@ footer {
 }
 
 
-:root {
-    --primary-color: #6c63ff;
-    --secondary-color: #4a42e8;
-    --dark-color: #333;
-    --light-color: #f4f4f4;
-    --gray-color: #888;
-    --white-color: #fff;
-    --black-color: #000;
+/**********************
+CREATE BLOG PAGE
+*************************/
+.create-blog-section {
+    padding: 2rem 0;
 }
+
+.form-heading {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.create-blog-form {
+    margin-top: 10rem;
+    background-color: var(--white-color);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    width: 500px;
+    flex-direction: column;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--gray-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: var(--light-color);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+}
+
+/**********************
+CREATE BLOG PAGE
+*************************/
 
 
 /* Blog Section */
