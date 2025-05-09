@@ -121,8 +121,6 @@ def contact_form(request):
 
 
 # about page
-from django.shortcuts import render
-
 def about(request):
     frontendskills = Frontendskill.objects.all()
     backendskills = Backend_dataskill.objects.all()
@@ -152,7 +150,8 @@ def about(request):
 
 # Resume page  
 def resume(request):
-    return render(request, 'pages/resume.html', {} )
+    general_records = GeneralInfo.objects.first()
+    return render(request, 'pages/resume.html', {"resume":getattr(general_records, 'resume', "N/A")})
 
 # Portfolio page
 def portfolio(request):

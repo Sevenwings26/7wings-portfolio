@@ -1,11 +1,8 @@
 from django.contrib import admin
 from django.http import HttpRequest
-from .models import GeneralInfo, Service, Frontendskill, Backend_dataskill
+from .models import GeneralInfo, Service, Frontendskill, Backend_dataskill, Portfolio
 
 # Register your models here.
-# iyanuSite
-# iyanusite1
-
 @admin.register(GeneralInfo)
 class GeneralInfoAdmin(admin.ModelAdmin):
     list_display = ['brand_name', 'name', 'phone', 'title_one']
@@ -23,5 +20,6 @@ class GeneralInfoAdmin(admin.ModelAdmin):
     
 
 admin.site.register(Service)
+admin.site.register(Portfolio)
 admin.site.register(Frontendskill)
 admin.site.register(Backend_dataskill)

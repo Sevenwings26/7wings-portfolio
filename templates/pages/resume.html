@@ -1,7 +1,6 @@
 {% extends "const/base.html" %} 
 {% load static %} 
-{% block title %} Resume
-{% endblock %} 
+{% block title %} Resume {% endblock title %} 
 {% block content %}
 
 <!-- Page Title -->
@@ -30,7 +29,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="{% url 'about' %}">About</a></li>
         <li>Resume</li>
-        <li><a href="#">Portfolio</a></li>
+        <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
       </ol>
     </div>
   </nav>
@@ -40,7 +39,7 @@
     <section id="resume" class="resume section">
         <div class='container'>
             <p>Kindly...</p>
-            <a href="https://drive.google.com/drive/folders/1csFCVIVj7sSqbnHXLAR2K75Md36XYbeB" target="_blank">Download Resume</a>
+            <a href="{{resume}}" target="_blank">Download Resume</a>
         </div>
     </section>
     <!-- Resume Section ends -->

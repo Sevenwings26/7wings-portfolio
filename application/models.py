@@ -6,6 +6,7 @@ class GeneralInfo(models.Model):
     brand_name = models.CharField(max_length=60)
     name = models.CharField(max_length=60)
     phone = models.CharField(max_length=25)
+    resume_link =  models.URLField(default='https://drive.google.com/drive/folders/1csFCVIVj7sSqbnHXLAR2K75Md36XYbeB')
     description = models.TextField(blank=True)
     email = models.EmailField(default='mail@mail.com', blank=True)
     address = models.CharField(max_length=100, blank=True, default='location')
@@ -15,7 +16,7 @@ class GeneralInfo(models.Model):
     title_four = models.CharField(max_length=60, blank=True, null=True)
     x_url = models.URLField()
     f_url = models.URLField()
-    ig_url = models.URLField()
+    ig_url = models.URLField(blank=True)
     linkedin_url = models.URLField()
     github_url = models.URLField(default="https//:github.com")
 
@@ -57,6 +58,15 @@ class Backend_dataskill(models.Model):
     def __str__(self):
         return f"{self.skill}: {self.percentage}"
 
+
+class Portfolio(models.Model):
+    p_title = models.CharField(max_length=300)
+    p_description = models.TextField()
+    p_image = models.ImageField(upload_to="portfolio/")
+    live_link = models.URLField(blank=True)
+
+    def __str__(self):
+        return f"{self.p_title} - {self.p_description}"
 
 # Contact Logs - number of times a particular user sent mail 
 class ContactFormLog(models.Model):

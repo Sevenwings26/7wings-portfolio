@@ -40,7 +40,7 @@ if ENVIRONMENT == "development":
     ALLOWED_HOSTS = []
 else:
     # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'sevenwings.onrender.com']
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['*'] # allow any host...
     
 # Application definition
 
