@@ -51,6 +51,7 @@ def register_view(request):
                 to=[user.email],
                 body=html_message
             )
+            
             email.content_subtype = "html"
             email.send()     
             messages.success(request, "A verification email has been sent. Please check your inbox.")

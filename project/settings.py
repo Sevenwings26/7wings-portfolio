@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment configuration 
 ENVIRONMENT = config('ENVIRONMENT', default="development")
-ENVIRONMENT = "production"
+# ENVIRONMENT = "production"
 
 SECRET_KEY = config('SECRET_KEY')
 
@@ -66,9 +66,9 @@ INSTALLED_APPS = [
     "blog",
     "acct",
     
-    # text styling 
-    "ckeditor",
-    'ckeditor_uploader',
+    # text editor
+    # "ckeditor", # uninstalled 
+    'django_summernote'
 ]
 
 MIDDLEWARE = [
@@ -81,6 +81,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
      "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
+
 
 
 # Use WhiteNoise to serve static files in production
@@ -202,13 +203,34 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 #     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # else:
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = "smtp.googlemail.com"
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = "smtp.googlemail.com"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') # app password...
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+
+# using mailersend 
+# settings.py
+
+MAILERSEND_API_KEY = "mlsn.ebc2156e7ab06ca509bd9bcf83a651985554eaf51837d01ef3b77ecd448b29e9"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.mailersend.net"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') # app password...
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_USER = "iarowosola@yahoo.com"
+# MAILERSEND_SMTP_USERNAME = "MS_2vh2ZU@test-p7kx4xwwyeeg9yjr.mlsender.net"
+EMAIL_HOST_PASSWORD = MAILERSEND_API_KEY
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+
+
+# EMAIL_BACKEND = 'project.mailersend_backend.MailerSendBackend'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# MAILERSEND_API_KEY = 'YOUR_MAILERSEND_API_KEY'  # Replace with your actual MailerSend API key
+# DEFAULT_FROM_EMAIL = 'iarowosola25@gmail.com'
 
 # backports.zoneinfo==0.2.1;python_version<"3.9"
 

@@ -8,8 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    
     <!-- Custom CSS -->    
     <link href="{% static 'assets/blog.css' %}" rel="stylesheet" />
 </head>
@@ -17,7 +16,6 @@
     <header>
         <div class="container">
             <div class="logo">Exclusive<span>Blog</span></div>
-    
             <!-- Toggle button for mobile -->
             <div class="menu-toggle" id="menu-toggle">
                <i class="fas fa-bars"></i>
@@ -32,8 +30,8 @@
                     <li><a href="#">Categories</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
-                    {% comment %} <li><a href="#">Login</a></li>
-                    <li><a href="{% url 'register' %}">Register</a></li> {% endcomment %}
+                    <li><a href="#">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
                     <li><a href="{% url 'create-blog' %}" class="">Write a Blog</a></li>
                 </ul>
             </nav>
@@ -72,12 +70,9 @@
             </div>
         </div>
     </footer>
-    <script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
-    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <!-- Custom JS -->
     <script src="assets/blogscripts.js"></script>
         <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
 </body>
 </html>

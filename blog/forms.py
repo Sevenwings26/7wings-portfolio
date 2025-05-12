@@ -1,31 +1,19 @@
 from django import forms
 from .models import Blog, Author, Category, Comment
 from ckeditor.widgets import CKEditorWidget
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
-# class CreateBlogForm(forms.ModelForm):
-#     category = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
-#     author = forms.ModelChoiceField(
-#         queryset=Author.objects.all(),
-#         # widget=forms.Select(attrs={'class': 'form-control'})
-#     )
 
-#     # body = forms.CharField(
-#     #     widget=CKEditorWidget()  # WYSIWYG - What You See is What You Get..
-#     # )
-    
-#     class Meta:
-#         model = Blog
-#         fields = ['author', 'category', 'title', 'image', 'body']
-
+# Blog creation form 
 class CreateBlogForm(forms.ModelForm):
+    body = forms.CharField(widget=SummernoteWidget())  #  WYSIWYG - What You See is What You Get..
+ 
     class Meta:
         model = Blog
         fields = ['author', 'category', 'title', 'image', 'body']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'body': forms.Textarea(attrs={'class': 'form-control', 'rows': 6}),
         }
-
         
 # Comment form 
 class CommentForm(forms.ModelForm):

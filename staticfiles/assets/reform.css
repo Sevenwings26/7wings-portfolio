@@ -33,7 +33,7 @@
   }
   
   .dark-background {
-    --background-color: rgba(15, 15, 15, 0.975);
+    --background-color: rgba(9, 0, 0, 0.975);
     --default-color: #ffffff;
     --heading-color: #ffffff;
     --surface-color: #292929f9;
@@ -1049,8 +1049,7 @@
   # Services Section
   --------------------------------------------------------------*/
   .services .service-item {
-    /* background-color: var(--surface-color); */
-    background-color: #343434;
+    background-color: var(--surface-color);
     text-align: center;
     padding: 80px 20px;
     transition: all ease-in-out 0.3s;
@@ -1061,7 +1060,7 @@
     margin: 0 auto;
     width: 64px;
     height: 64px;
-    /* background: var(--accent-color); */
+    background: var(--accent-color);
     background: #18d26e;
     border-radius: 4px;
     display: flex;
@@ -1098,6 +1097,7 @@
   }
   
   .services .service-item p {
+    color: rgb(213, 206, 206);
     line-height: 24px;
     font-size: 14px;
     margin-bottom: 0;
@@ -1125,7 +1125,9 @@
     color: var(--contrast-color);
   }
   
-  
+  .service-nav {
+    color: var(--contrast-color);
+  }
   
   
   /*--------------------------------------------------------------
@@ -1174,6 +1176,7 @@
   
   .service-details p {
     font-size: 15px;
+    color: #ffffff;
   }
   
   .service-details ul {
@@ -1194,6 +1197,11 @@
     color: var(--accent-color);
   }
   
+  .service-details .service-content p,
+  .service-details .service-content * {
+  color: white !important;
+}
+
   /*--------------------------------------------------------------
   # Portfolio Section
   --------------------------------------------------------------*/

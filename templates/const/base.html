@@ -59,12 +59,16 @@
     {% endif %}
   {% endfor %}  
 
-      {% if 'about' not in request.path and 'resume' not in request.path and 'portfolio' not in request.path %}
-        {% include 'const/header.html' %}
-      {% endif %}
+      {% if 'about' not in request.path and 'resume' not in request.path and 'portfolio' not in request.path and 'service-detail' not in request.path %}
+    {% include 'const/header.html' %}
+{% endif %}
+
+  
+    
       
     <main class="main">
-      {% block content %} 
+      {% block content %}
+       
       {% endblock %}
     </main>
     
