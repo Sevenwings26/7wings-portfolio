@@ -1,5 +1,4 @@
 from django.db import models
-from ckeditor.fields import RichTextField
 # Create your models here.
 
 class GeneralInfo(models.Model):
@@ -26,7 +25,8 @@ class GeneralInfo(models.Model):
     degree = models.CharField(max_length=150, blank=True, default='text')
     job_type = models.CharField(max_length=150, blank=True, default='text')
     location = models.CharField(max_length=150, blank=True, default='text')
-    bio = RichTextField(blank=False, default='text')
+    # bio = RichTextField(blank=False, default='text')
+    bio = models.TextField(blank=False, default='text')
 
 
     
@@ -34,8 +34,8 @@ class Service(models.Model):
     icon = models.CharField(max_length=60)
     title = models.CharField(max_length=60)
     image = models.ImageField(upload_to='service-images/', blank=True, null=True)
-    description = RichTextField(blank=True, null=True)
-    body = RichTextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    body = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.title

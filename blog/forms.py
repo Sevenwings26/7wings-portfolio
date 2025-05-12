@@ -1,6 +1,5 @@
 from django import forms
 from .models import Blog, Author, Category, Comment
-from ckeditor.widgets import CKEditorWidget
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 

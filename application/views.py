@@ -4,7 +4,6 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import GeneralInfo, Service, Frontendskill, Backend_dataskill, ContactFormLog
-from ckeditor.fields import RichTextField
 
 # for mail 
 from django.core.mail import send_mail
