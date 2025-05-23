@@ -6,7 +6,6 @@
     <div class="container">
         <h2 class="form-heading">Create New Blog</h2>
         <form method="POST" enctype="multipart/form-data" class="create-blog-form"><br><br>
-
             {% csrf_token %}
             <div class="form-grid">
                 {{ form.non_field_errors }}
@@ -35,10 +34,11 @@
                     {{ form.image.errors }}
                 </div>
                 <div>Body:</div>
-                <div class="form-group full-width">
+                <div class="form-group full-width" style="position: relative;">
                     <span style="display: none;">{{ form.body.label_tag }}</span>
                     {{ form.body }}
                     {{ form.body.errors }}
+                    <div id="autocomplete-suggestion" style="position: absolute; top: 10px; left: 10px; color: gray; opacity: 0.5; pointer-events: none; font-size: 1rem;"></div>
                 </div>
             </div>
 
@@ -46,4 +46,49 @@
         </form>
     </div>
 </section>
+
+<!-- autocomplete-suggestion -->
+<script>
+  const iframe = document.querySelector('#id_body_iframe');
+  const suggestionBox = document.getElementById('autocomplete-suggestion');
+  let debounceTimeout;
+
+  iframe.addEventListener('load', () => {
+    const editableBody = iframe.contentDocument.querySelector('.note-editable');
+
+    editableBody.addEventListener('input', () => {
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        const inputText = editableBody.innerText;
+
+        if (inputText.trim() === '') {
+          suggestionBox.textContent = '';
+          return;
+        }
+
+        fetch('blog/autocomplete/api/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+          },
+          body: JSON.stringify({ prompt: inputText })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.suggestion) {
+            suggestionBox.textContent = data.suggestion;
+          } else {
+            suggestionBox.textContent = '';
+          }
+        })
+        .catch(err => {
+          console.error('Autocomplete error:', err);
+          suggestionBox.textContent = '';
+        });
+
+      }, 800);
+    });
+  });
+</script>
 {% endblock content %}

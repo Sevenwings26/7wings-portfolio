@@ -1,5 +1,7 @@
 from django.urls import path 
 from . import views
+from .autocomplete import autocomplete_blog
+
 # from .views import BlogIndex
 
 urlpatterns = [
@@ -14,9 +16,13 @@ urlpatterns = [
     # path('post-comment/<int:post_id>', views.post_comment, name="post_comment"), 
     path('<int:blog_id>/comment/', views.post_comment, name='post_comment'),
     path('post/<int:comment_id>/reply/', views.post_reply, name='post_reply'),
-    path('/post/<int:blog_id>/like/', views.like_blog, name='like_blog'),
+    path('post/<int:blog_id>/like/', views.like_blog, name='like_blog'),
     path('post/<int:blog_id>/dislike/', views.dislike_blog, name='like_blog'),
+    
+    # autocomplete 
+    # path('autocomplete/api/', views.autocomplete_blog, name='autocomplete_blog'),
+    path('autocomplete/api/', autocomplete_blog, name='autocomplete_blog'),
 ]
-
+# autocomplete/api/
 
 

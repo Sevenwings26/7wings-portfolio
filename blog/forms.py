@@ -6,7 +6,6 @@ from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 # Blog creation form 
 class CreateBlogForm(forms.ModelForm):
     body = forms.CharField(widget=SummernoteWidget())  #  WYSIWYG - What You See is What You Get..
- 
     class Meta:
         model = Blog
         fields = ['author', 'category', 'title', 'image', 'body']

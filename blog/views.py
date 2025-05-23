@@ -13,27 +13,14 @@ from django.views import View
 
 
 # Class-based views
-class BlogIndex(TemplateView):
-    template_name = "blog/index.html"
-
 class BlogIndex(View):
-    def get(self, request):  # method get
+    def get(self, request):  # method get 
         blogs = Blog.objects.all().order_by('-created_at')  # Retrieve Latest blog
         context = {
             'blogs': blogs,
             # 'categories': categories
         }
         return render(request, 'blog/index.html', context)
-
-
-
-# def blog_index(request):
-#     blogs = Blog.objects.all().order_by('-created_at')  # Retrieve Latest blog
-#     context = {
-#         'blogs': blogs,
-#         # 'categories': categories
-#     }
-#     return render(request, 'blog/index.html', context)
 
 
 def blog_detail(request, blog_id):
