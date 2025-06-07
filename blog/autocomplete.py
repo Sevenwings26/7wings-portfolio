@@ -15,7 +15,6 @@ def autocomplete_blog(request):
         data = json.loads(request.body)
         user_input = data.get('prompt', '')
         print("User input received:", user_input)
-
         if not user_input:
             return JsonResponse({'suggestion': ''})
 
@@ -32,10 +31,8 @@ def autocomplete_blog(request):
                 },
                 stream=False,
             )
-
             suggestion = response.text.strip()
             return JsonResponse({'suggestion': suggestion})
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
-
     return JsonResponse({'error': 'Invalid request method'}, status=400)

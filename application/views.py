@@ -129,6 +129,8 @@ def about(request):
 
     # Initialize context using getattr for all attributes, with default values
     context = {
+        "brand_name": general_records.brand_name,
+        
         "brand_name": getattr(general_records, "brand_name", "Default Brand"),
         "phone": getattr(general_records, "phone", "N/A"),
         "email": getattr(general_records, "email", "N/A"),
