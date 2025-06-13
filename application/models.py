@@ -1,13 +1,17 @@
 from django.db import models
-# Create your models here.
+from ckeditor.fields import RichTextField
+from django_summernote.fields import SummernoteTextField
 
+
+# Create your models here.
 class GeneralInfo(models.Model):
     brand_name = models.CharField(max_length=60)
-    name = models.CharField(max_length=60)
+    first_name = models.CharField(max_length=60, default="Iyanu") # Update - 9th June, 2025
+    last_name = models.CharField(max_length=60, default="Arowosola") # Update - 9th June, 2025
     phone = models.CharField(max_length=25)
     resume_link =  models.URLField(default='https://drive.google.com/drive/folders/1csFCVIVj7sSqbnHXLAR2K75Md36XYbeB')
     description = models.TextField(blank=True)
-    email = models.EmailField(default='mail@mail.com', blank=True)
+    email = models.EmailField(default='iarowosola@yahoo.com')
     address = models.CharField(max_length=100, blank=True, default='location')
     title_one = models.CharField(max_length=60, blank=False, null=True)
     title_two = models.CharField(max_length=60, blank=True, null=True)
@@ -17,24 +21,36 @@ class GeneralInfo(models.Model):
     f_url = models.URLField()
     ig_url = models.URLField(blank=True)
     linkedin_url = models.URLField()
-    github_url = models.URLField(default="https//:github.com")
+    github_url = models.URLField(default="https//:github.com/Sevenwings26")
 
     # add for more variables 
-    about_title = models.CharField(max_length=200, blank=True, default='text')
     birthday = models.CharField(max_length=20, blank=True, default='text')
     degree = models.CharField(max_length=150, blank=True, default='text')
     job_type = models.CharField(max_length=150, blank=True, default='text')
     location = models.CharField(max_length=150, blank=True, default='text')
-    # bio = RichTextField(blank=False, default='text')
-    bio = models.TextField(blank=False, default='text')
+    
+    brief_bio = RichTextField(blank=False, default='text') # RichtextField
+    bio = RichTextField(blank=False, default='text') # RichtextField
+    # bio = SummernoteTextField(blank=False, default='text') # RichtextField
+
+    # update models - 6th June, 2025.
+    about_title = models.CharField(max_length=200, blank=True, default='text')
+    hero_caption = models.TextField(default="")
+    service_caption = models.TextField(blank=True)
 
 
     
+    def __str__(self):
+        return self.first_name
+
+
 class Service(models.Model):
-    icon = models.CharField(max_length=60)
+    icon = models.CharField(max_length=60, blank=True)
     title = models.CharField(max_length=60)
+    slug = models.SlugField(max_length=100, default="service")
     image = models.ImageField(upload_to='service-images/', blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    description = RichTextField(blank=True, null=True)
+    # description = SummernoteTextField(blank=True, null=True)
     body = models.TextField(blank=True, null=True)
 
     def __str__(self):

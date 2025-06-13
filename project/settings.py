@@ -68,9 +68,12 @@ INSTALLED_APPS = [
     "acct",
     
     # text editor
-    # "ckeditor", # uninstalled 
+    'ckeditor_uploader',
+    "ckeditor", 
     'django_summernote'
 ]
+
+# X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -82,8 +85,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
-
-
 
 # Use WhiteNoise to serve static files in production
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -108,15 +109,37 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "project.wsgi.application"
 
-# ckeditor 
-CKEDITOR_UPLOAD_PATH = "uploads/"
+# # ckeditor 
+# CKEDITOR_UPLOAD_PATH = "uploads/"
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'full',
+#         'height': 300,
+#         'width': '100%',
+#     },
+# }
+
+# CKEditor settings
+CKEDITOR_UPLOAD_PATH = "uploads/"  # for file uploads (requires ckeditor_uploader)
+CKEDITOR_IMAGE_BACKEND = "pillow"  # for image processing
+CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js' 
+
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'full',
+        'toolbar': 'Full',
         'height': 300,
         'width': '100%',
     },
 }
+
+# SUMMERNOTE_CONFIG = {
+#     'iframe': False,
+#     'summernote': {
+#         'width': '100%',
+#         'height': '300px',
+#     },
+#     # 'attachment_require_authentication': True,
+# }
 
 
 # Database

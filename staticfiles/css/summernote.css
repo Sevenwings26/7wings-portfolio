@@ -1,0 +1,17 @@
+/* Light Theme */
+.editor-light .note-editable {
+    /* font-family: 'YourFont', sans-serif; */
+    font-size: 1rem;
+    color: #333;                  /* dark text */
+    background-color: #ffffff;    /* white background */
+  }
+  
+  /* Dark Theme */
+  .editor-dark .note-editable {
+    /* font-family: 'YourFont', sans-serif; */
+    font-size: 1rem;
+    color: #f0f0f0;               /* light text */
+    background-color: #1e1e1e;    /* dark background */
+    border: 1px solid #444;
+  }
+  

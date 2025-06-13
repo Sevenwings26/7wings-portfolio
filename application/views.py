@@ -50,9 +50,11 @@ def index(request):
     return render(request, "pages/index.html", context)
 
 
-def service_detail(request, service_id):
+def service_detail(request, slug):
     titles = Service.objects.all() # get titles
-    service_detail = get_object_or_404(Service, id=service_id)
+    # service_detail = get_object_or_404(Service, id=service_id)
+    # service_detail = get_object_or_404(Service, slug=slug)
+    service_detail = Service.objects.get(slug=slug)
     context = {
         'service':service_detail,
         'titles':titles

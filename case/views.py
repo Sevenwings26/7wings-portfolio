@@ -1,13 +1,15 @@
 from django.shortcuts import render
+from datetime import datetime
 
 # Create your views here.
 """
     CONTAINS PORTFOLIO LOGICS
 """ 
-
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import GeneralInfo, Service, Frontendskill, Backend_dataskill, ContactFormLog
 
+# use application model 
+from application.models import GeneralInfo, Frontendskill, Backend_dataskill, ContactFormLog
+from .models import Service, ServiceFeature
 # for mail 
 from django.core.mail import send_mail
 from django.conf import settings
@@ -16,17 +18,21 @@ from django.contrib import messages
 from django.utils import timezone
 
 
+# current_year = datetime.today()
+# current_year = datetime(current_year.year)
+
 # Create your views here.
 def index(request):
-    services = Service.objects.all()
+    services = Service.objects.all()[:4]
 
     # Fetch the first general record or None if it doesn't exist
     general_records = GeneralInfo.objects.first()
 
     # Initialize context using getattr for all attributes, with default values
     context = {
-        "brand_name": getattr(general_records, "brand_name", "Default Brand"),
-        "username": getattr(general_records, "name", "Default Name"),
+        "brand_name": getattr(general_records, "brand_name", "Sevenwings"),
+        "first_name": getattr(general_records, "first_name", "Iyanu"),
+        "last_name": getattr(general_records, "last_name", "Arowosola"),
         "phone": getattr(general_records, "phone", "N/A"),
         "email": getattr(general_records, "email", "N/A"),
         "address": getattr(general_records, "address", "N/A"),
@@ -35,16 +41,21 @@ def index(request):
         "title2": getattr(general_records, "title_two", "N/A"),
         "title3": getattr(general_records, "title_three", "N/A"),
         "title4": getattr(general_records, "title_four", "N/A"),
+
         "x_url": getattr(general_records, "x_url", "#"),
         "f_url": getattr(general_records, "f_url", "#"),
         "ig_url": getattr(general_records, "ig_url", "#"),
         "linkedin_url": getattr(general_records, "linkedin_url", "#"),
         "github_url": getattr(general_records, "github_url", "#"),
-        "about_title": getattr(general_records, "about_title", "About Me"),
-        "degree": getattr(general_records, "degree", "N/A"),
-        "job_type": getattr(general_records, "job_type", "N/A"),
         "location": getattr(general_records, "location", "N/A"),
+        "brief_bio": getattr(general_records, "brief_bio", "N/A"),
         "bio": getattr(general_records, "bio", "N/A"),
+
+        # update models - 6th June, 2025.
+        "about_title": getattr(general_records, "about_title", "About Me"),
+        "hero_caption": getattr(general_records, 'hero_caption', "N/A"),
+        "service_caption": getattr(general_records, 'service_caption', "N/A"),
+
     }
 
     # Add services to the context
@@ -53,14 +64,19 @@ def index(request):
     return render(request, "case/landing.html", context)
 
 
-def service_detail(request, service_id):
-    titles = Service.objects.all() # get titles
-    service_detail = get_object_or_404(Service, id=service_id)
-    context = {
-        'service':service_detail,
-        'titles':titles
-    }
-    return render(request, 'pages/service-details.html', context)
+# def services(request):
+#     services = Service.objects.all() # get titles
+#     # service_detail = get_object_or_404(Service, id=service_id)
+#     context = {
+#         'services':services,
+#         # 'titles':titles
+#     }
+#     return render(request, 'case/services.html', context)
+
+
+def services(request):
+    services = Service.objects.prefetch_related('features').all()
+    return render(request, 'case/services.html', {'services': services})
 
 
 # contact form  

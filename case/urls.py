@@ -2,7 +2,7 @@ from django.urls import path
 from .import views
 
 urlpatterns = [
-    path('acc/', views.index, name="index"),
+    path('', views.index, name="index"),
+    path('serices/', views.services, name="services"),
 ]
-
 
