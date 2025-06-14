@@ -68,8 +68,9 @@ INSTALLED_APPS = [
     "acct",
     
     # text editor
-    'ckeditor_uploader',
-    "ckeditor", 
+    # 'ckeditor_uploader',
+    # "ckeditor", 
+    "django_prose_editor",
     'django_summernote'
 ]
 
@@ -108,16 +109,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "project.wsgi.application"
-
-# # ckeditor 
-# CKEDITOR_UPLOAD_PATH = "uploads/"
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'toolbar': 'full',
-#         'height': 300,
-#         'width': '100%',
-#     },
-# }
 
 # CKEditor settings
 CKEDITOR_UPLOAD_PATH = "uploads/"  # for file uploads (requires ckeditor_uploader)

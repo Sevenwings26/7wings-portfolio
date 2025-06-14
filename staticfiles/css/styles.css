@@ -2755,10 +2755,6 @@ td:last-child {
 	--width-grid-max: var(--width-narrower);
 }
 
-.width-wider {
-	--width-grid-max: var(--width-wider);
-}
-
 .text-body-sm {
 	font-size  : calc(var(--text-size) * 0.95);
 	line-height: calc(0.9375 * var(--space));

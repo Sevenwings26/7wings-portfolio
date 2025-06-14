@@ -3197,8 +3197,7 @@ td:last-child {
 		             0 8px 8px rgba(0, 0, 0, 0.03),
 		              16px 16px rgba(0, 0, 0, 0.03);
 	z-index         : 100;
-	/* background-color: transparent; */
-	background-color: black;
+	background-color: transparent;
 	height          : var(--header-height);
 	width           : 100%;
 	position        : absolute;

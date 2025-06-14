@@ -7,7 +7,8 @@ charset-normalizer==3.4.2
 colorama==0.4.6
 dj-database-url==2.2.0
 Django==4.2.15
-django-js-asset==2.2.0
+django-js-asset==3.1.2
+django-prose-editor==0.12.0
 django-summernote==0.8.20.0
 docutils==0.21.2
 google-ai-generativelanguage==0.6.15
@@ -23,11 +24,11 @@ gunicorn==23.0.0
 httplib2==0.22.0
 idna==3.10
 mailersend==0.6.0
+nh3==0.2.21
 packaging==24.1
 pillow==11.2.1
 proto-plus==1.26.1
 protobuf==5.29.4
-# psycopg2==2.9.9
 psycopg2-binary==2.9.9
 pyasn1==0.6.1
 pyasn1_modules==0.4.2

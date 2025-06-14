@@ -1,10 +1,12 @@
 from django.db import models
-from ckeditor.fields import RichTextField
+# from ckeditor.fields import RichTextField
+from django_prose_editor.fields import ProseEditorField
 
 class Service(models.Model):
     title = models.CharField(max_length=200)
-    description = RichTextField()
-    body = RichTextField(default="Service details")
+    description = ProseEditorField()
+    # body = RichTextField(default="Service details")
+    body = ProseEditorField(default="Service details")
 
     def __str__(self):
         return self.title
@@ -21,7 +23,8 @@ class Testimonial(models.Model):
     client_image= models.ImageField(upload_to='clients/')
     client_name = models.CharField(max_length=200)
     company_name = models.CharField(max_length=200)
-    body = RichTextField()
+    # body = RichTextField()
+    body = ProseEditorField()
 
     # def imageURL:
 

@@ -1,6 +1,7 @@
 from django.db import models
-from ckeditor.fields import RichTextField
+# from ckeditor.fields import RichTextField
 from django_summernote.fields import SummernoteTextField
+from django_prose_editor.fields import ProseEditorField
 
 
 # Create your models here.
@@ -29,9 +30,11 @@ class GeneralInfo(models.Model):
     job_type = models.CharField(max_length=150, blank=True, default='text')
     location = models.CharField(max_length=150, blank=True, default='text')
     
-    brief_bio = RichTextField(blank=False, default='text') # RichtextField
-    bio = RichTextField(blank=False, default='text') # RichtextField
+    brief_bio = ProseEditorField(blank=False, default='text') # RichtextField
+    # brief_bio = RichTextField(blank=False, default='text') # RichtextField
+    # bio = RichTextField(blank=False, default='text') # RichtextField
     # bio = SummernoteTextField(blank=False, default='text') # RichtextField
+    bio = ProseEditorField(blank=False, default='text')
 
     # update models - 6th June, 2025.
     about_title = models.CharField(max_length=200, blank=True, default='text')
@@ -49,8 +52,8 @@ class Service(models.Model):
     title = models.CharField(max_length=60)
     slug = models.SlugField(max_length=100, default="service")
     image = models.ImageField(upload_to='service-images/', blank=True, null=True)
-    description = RichTextField(blank=True, null=True)
-    # description = SummernoteTextField(blank=True, null=True)
+    # description = RichTextField(blank=True, null=True)
+    description = ProseEditorField(blank=True, null=True)
     body = models.TextField(blank=True, null=True)
 
     def __str__(self):
