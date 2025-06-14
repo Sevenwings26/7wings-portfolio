@@ -1,0 +1,75 @@
+{% extends "case/base.html" %}
+{% load static %}
+{% block content %}
+
+
+        <!-- # site main content
+        ================================================== -->
+        <section id="content" class="s-content">
+
+            <section class="s-pageheader pageheader">
+                 <div class="row">
+                     <div class="column xl-12">
+                         <h1 class="page-title">
+                            Iyanu Arowosola
+                         </h1>
+                         
+                     </div>
+                 </div>
+            </section> <!-- end pageheader --> 
+
+            <section class="s-pagecontent pagecontent">
+
+                 <div class="row pageintro">
+                     <div class="column xl-6 lg-12">
+                         <h2 class="text-display-title">Grit embedded in vision!</h2>
+                     </div>
+                     <div class="column xl-6 lg-12 u-flexitem-x-right">
+                         <p class="lead">
+                            <i>"Do you see a man who excels in his work? He will stand before kings; He will not stand before unknown men."</i> <br>
+                            Excellence sets men apart and causes elevation!
+                            You are in the right place!!!
+                         </p>
+                     </div>                       
+                 </div> <!-- end pageintro -->   
+                 
+                 <div class="row pagemedia">
+                     <d class="column xl-12">
+                            <img src="{% static 'images/profile-about.jpg' %}" 
+                                srcset="{% static 'images/profile-about.jpg' %} 2400w, 
+                                        {% static 'images/profile-about.jpg' %} 1200w, 
+                                        {% static 'images/tprofile-about.jpg' %} 600w" sizes="(max-width: 2400px) 100vw, 2400px" alt="Iyanu-Arowosola">
+                         </figure>
+                     </d>
+                 </div> <!-- end pagemedia -->
+
+                 <div class="row width-narrower pagemain">
+                     <div class="column xl-12"> 
+                        {{bio|safe}}
+                     </div> <!-- end grid-block-->
+                 </div> <!-- end pagemain -->
+
+            </section> <!-- pagecontent -->
+     </section> <!-- s-content-->
+
+     <!-- # cta
+     ================================================== -->
+     {% comment %} <section id="cta" class="s-cta">
+         <div class="row row-x-center text-center">
+             <div class="column xl-8 lg-12">
+                 <div class="s-cta__content">
+                     <h2 class="text-display-title">
+                     Get started with a consultation today.
+                     </h2>
+                     <p class="lead">
+                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis rem, esse doloribus sint eaque at debitis enim vitae minus expedita ratione dignissimos sit nostrum optio sequi. Ipsa at beatae quam.
+                     </p>
+                     <a href="contact.html" class="btn btn--primary">Let's Work Together</a>
+                 </div>
+
+             </div>
+         </div>
+     </section> <!-- end s-cta --> {% endcomment %}
+
+
+{% endblock content %}
