@@ -20,7 +20,7 @@ urlpatterns = [
     path('post/<int:blog_id>/dislike/', views.dislike_blog, name='like_blog'),
     
     # autocomplete 
-    path('autocomplete/api/', views.autocomplete_blog, name='autocomplete_blog'),
+    # path('autocomplete/api/', views.autocomplete_blog, name='autocomplete_blog'),
     # path('autocomplete/api/', autocomplete_blog, name='autocomplete_blog'),
 ]
 

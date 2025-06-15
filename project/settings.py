@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment configuration 
 ENVIRONMENT = config('ENVIRONMENT', default="development")
-# ENVIRONMENT = "production"
+ENVIRONMENT = "production"
 
 SECRET_KEY = config('SECRET_KEY')
 
@@ -31,7 +31,7 @@ SECRET_KEY = config('SECRET_KEY')
 if ENVIRONMENT == 'development':
     DEBUG = True
 else:
-    DEBUG = False
+    DEBUG = True
 
 # ALLOWED_HOSTS = []
 
@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     # created app 
     "application",
     "case",
-    "blog",
+    # "blog",
     "acct",
     
     # text editor
@@ -110,18 +110,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "project.wsgi.application"
 
-# CKEditor settings
-CKEDITOR_UPLOAD_PATH = "uploads/"  # for file uploads (requires ckeditor_uploader)
-CKEDITOR_IMAGE_BACKEND = "pillow"  # for image processing
-CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js' 
+# # CKEditor settings
+# CKEDITOR_UPLOAD_PATH = "uploads/"  # for file uploads (requires ckeditor_uploader)
+# CKEDITOR_IMAGE_BACKEND = "pillow"  # for image processing
+# CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js' 
 
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Full',
-        'height': 300,
-        'width': '100%',
-    },
-}
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'Full',
+#         'height': 300,
+#         'width': '100%',
+#     },
+# }
 
 # SUMMERNOTE_CONFIG = {
 #     'iframe': False,
