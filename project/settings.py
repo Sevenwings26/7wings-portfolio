@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment configuration 
 ENVIRONMENT = config('ENVIRONMENT', default="development")
-# ENVIRONMENT = "production"
+ENVIRONMENT = "production"
 
 SECRET_KEY = config('SECRET_KEY')
 
@@ -189,20 +189,6 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Mail-set up 
-# if ENVIRONMENT == "development":
-#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# else:
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = "smtp.googlemail.com"
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') # app password...
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-
-# using mailersend 
-# settings.py
 
 MAILERSEND_API_KEY = config("MAILERSEND_API_KEY")
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
