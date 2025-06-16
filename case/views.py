@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 # use application model 
 from application.models import GeneralInfo, Frontendskill, Backend_dataskill, ContactFormLog
-from .models import Service, ServiceFeature, Testimonial
+from .models import Service, ServiceFeature, Testimonial, Project
 # for mail 
 from django.core.mail import send_mail
 from django.conf import settings
@@ -24,7 +24,8 @@ from django.utils import timezone
 # Create your views here.
 def index(request):
     services = Service.objects.all()[:4]
-    testimonial = Testimonial.objects.all()
+    testimonials = Testimonial.objects.all()
+    projects = Project.objects.all()[:3]
 
     # Fetch the first general record or None if it doesn't exist
     general_records = GeneralInfo.objects.first()
@@ -62,36 +63,12 @@ def index(request):
 
     # Add services to the context
     context["services"] = services
-    context["testimonial"] = testimonial
+    context["testimonials"] = testimonials
+    context["projects"] = projects
 
     return render(request, "case/landing.html", context)
 
 
-# def services(request):
-#     services = Service.objects.all() # get titles
-#     # service_detail = get_object_or_404(Service, id=service_id)
-#     context = {
-#         'services':services,
-#         # 'titles':titles
-#     }
-#     return render(request, 'case/services.html', context)
-
-
-def services(request):
-    testimonial = Testimonial.objects.all()
-    services = Service.objects.prefetch_related('features').all()
-    context = {
-        'services': services
-    }
-    context["testimonial"] = testimonial
-
-    return render(request, 'case/services.html', context)
-
-
-# contact
-# def contact(request):
-#     context = {}
-#     return render(request, 'case/contact.html', context)
 
 def about(request):
     general_records = GeneralInfo.objects.first()
@@ -120,12 +97,23 @@ def about(request):
 
     return render(request, 'case/about.html', context)
 
-# Resume page  
-def resume(request):
-    general_records = GeneralInfo.objects.first()
-    return render(request, 'pages/resume.html', {"resume":getattr(general_records, 'resume', "N/A")})
+
 
 # Portfolio page
-def portfolio(request):
-    return render(request, 'pages/portfolio.html', {})
+def projects(request):
+    projects = Project.objects.all()
+    context = {
+        'projects': projects
+    }
+    return render(request, 'case/projects.html', {})
+
+def services(request):
+    testimonial = Testimonial.objects.all()
+    services = Service.objects.prefetch_related('features').all()
+    context = {
+        'services': services
+    }
+    context["testimonial"] = testimonial
+
+    return render(request, 'case/services.html', context)
 

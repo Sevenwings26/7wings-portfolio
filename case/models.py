@@ -2,6 +2,25 @@ from django.db import models
 # from ckeditor.fields import RichTextField
 from django_prose_editor.fields import ProseEditorField
 
+
+class Project(models.Model):
+    title = models.CharField(max_length=255)
+    live = models.URLField()
+    repo = models.URLField()
+    image = models.ImageField(upload_to='projects/')
+    description = ProseEditorField(default='some-description')
+
+    @property
+    def imageurl(self):
+        try:
+            return self.image.url
+        except:
+            return ''
+
+    def __str__(self):
+        return self.title
+
+
 class Service(models.Model):
     title = models.CharField(max_length=200)
     description = ProseEditorField()
@@ -29,6 +48,6 @@ class Testimonial(models.Model):
     # def imageURL:
 
     def __str__(self):
-        return f"{client_name} - {company_name}"
+        return f"{self.client_name} - {self.company_name}"
 
 

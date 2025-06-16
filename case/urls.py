@@ -6,5 +6,6 @@ urlpatterns = [
     path('serices/', views.services, name="services"),
     # path('contact/', views.contact, name="contact"),
     path('about-me/', views.about, name="about-me"),
+    path('projects/', views.projects, name="projects"),
 ]
 

@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment configuration 
 ENVIRONMENT = config('ENVIRONMENT', default="development")
-ENVIRONMENT = "production"
+# ENVIRONMENT = "production"
 
 SECRET_KEY = config('SECRET_KEY')
 
@@ -110,29 +110,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "project.wsgi.application"
 
-# # CKEditor settings
-# CKEDITOR_UPLOAD_PATH = "uploads/"  # for file uploads (requires ckeditor_uploader)
-# CKEDITOR_IMAGE_BACKEND = "pillow"  # for image processing
-# CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js' 
-
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'toolbar': 'Full',
-#         'height': 300,
-#         'width': '100%',
-#     },
-# }
-
-# SUMMERNOTE_CONFIG = {
-#     'iframe': False,
-#     'summernote': {
-#         'width': '100%',
-#         'height': '300px',
-#     },
-#     # 'attachment_require_authentication': True,
-# }
-
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -151,7 +128,6 @@ WSGI_APPLICATION = "project.wsgi.application"
 # }
 
 AUTH_USER_MODEL = "acct.CustomUser"
-
 
 if ENVIRONMENT == "development":
     DATABASES = {
@@ -228,24 +204,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # using mailersend 
 # settings.py
 
-MAILERSEND_API_KEY = "mlsn.ebc2156e7ab06ca509bd9bcf83a651985554eaf51837d01ef3b77ecd448b29e9"
-
+MAILERSEND_API_KEY = config("MAILERSEND_API_KEY")
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.mailersend.net"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "iarowosola@yahoo.com"
-# MAILERSEND_SMTP_USERNAME = "MS_2vh2ZU@test-p7kx4xwwyeeg9yjr.mlsender.net"
 EMAIL_HOST_PASSWORD = MAILERSEND_API_KEY
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-
-
-# EMAIL_BACKEND = 'project.mailersend_backend.MailerSendBackend'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# MAILERSEND_API_KEY = 'YOUR_MAILERSEND_API_KEY'  # Replace with your actual MailerSend API key
-# DEFAULT_FROM_EMAIL = 'iarowosola25@gmail.com'
 
 # backports.zoneinfo==0.2.1;python_version<"3.9"
 

@@ -1,0 +1,41 @@
+{% extends "case/base.html" %}
+{% load static %}
+{% block content %}
+
+        <!-- # site main content
+        ================================================== -->
+    <section id="content" class="s-content">
+        <section class="s-pageheader pageheader">
+                 <div class="row">
+                     <div class="column xl-12">
+                        <h2 class="page-title">Projects</h2>
+                     </div>
+                 </div>
+        </section>
+
+        <div>
+            <h1>
+                Working on this page!!!
+            </h1>
+        </div>
+        {% comment %} <section class="s-pagecontent pagecontent">
+                <div class="row">
+                <div class="column xl-12 grid-block">             
+                    <div class="grid-full grid-list-items list-items show-ctr">
+
+
+                        {% for service in services %}
+                        <div class="grid-list-items__item list-items__item"> 
+                            <div class="list-items__item-header">
+                                <h3 class="list-items__item-title">{{ service.title }}</h3>
+                            </div>
+                            <div class="list-items__item-text">
+                                <p>{{ service.body|safe }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div> <!-- end grid-block-->
+                </div> <!-- end row -->
+
+            </section> <!-- pagecontent --> {% endcomment %}
+{% endblock content %}
