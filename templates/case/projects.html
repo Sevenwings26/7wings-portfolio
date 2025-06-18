@@ -12,30 +12,34 @@
                      </div>
                  </div>
         </section>
-
-        <div>
-            <h1>
-                Working on this page!!!
-            </h1>
-        </div>
-        {% comment %} <section class="s-pagecontent pagecontent">
+        <section class="s-pagecontent pagecontent">
                 <div class="row">
                 <div class="column xl-12 grid-block">             
                     <div class="grid-full grid-list-items list-items show-ctr">
-
-
-                        {% for service in services %}
-                        <div class="grid-list-items__item list-items__item"> 
-                            <div class="list-items__item-header">
-                                <h3 class="list-items__item-title">{{ service.title }}</h3>
+                        {% for project in projects %}
+                        <div class="grid-list-items__item list-items__item" style="display: flex; flex-direction: row; gap: 20px; align-items: center; flex-wrap: wrap;">
+                            <!-- Image -->
+                            <div class="project-image" style="flex: 1; min-width: 280px;">
+                                <img src="{{project.imageurl}}" alt="Salary Predictor App" style="width: 100%; border-radius: 12px;">
                             </div>
-                            <div class="list-items__item-text">
-                                <p>{{ service.body|safe }}</p>
+                            <!-- Text -->
+                            <div class="project-details" style="flex: 2; min-width: 300px;">
+                                <div class="grid-list-items__title list-items__item-header">
+                                    <h3 class="list-items__item-title">{{project.title}}</h3>
+                                </div>
+                                <div class="grid-list-items__text list-items__item-text">
+                                    <p>
+                                        {{project.description|safe}}
+                                        <br>
+                                        <a href="{{project.repo}}" target="_blank">View on GitHub ↗</a>
+                                        <a href="{{project.live}}" target="_blank">View live ↗</a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         {% endfor %}
                     </div> <!-- end grid-block-->
                 </div> <!-- end row -->
 
-            </section> <!-- pagecontent --> {% endcomment %}
+            </section> <!-- pagecontent -->
 {% endblock content %}

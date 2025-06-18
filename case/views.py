@@ -21,6 +21,7 @@ from django.utils import timezone
 # current_year = datetime.today()
 # current_year = datetime(current_year.year)
 
+general_records = GeneralInfo.objects.first()
 # Create your views here.
 def index(request):
     services = Service.objects.all()[:4]
@@ -107,13 +108,25 @@ def projects(request):
     }
     return render(request, 'case/projects.html', {})
 
-def services(request):
+def services(request):    
     testimonial = Testimonial.objects.all()
     services = Service.objects.prefetch_related('features').all()
+
     context = {
-        'services': services
+        "brand_name": getattr(general_records, "brand_name", "Sevenwings"),
+        "phone": getattr(general_records, "phone", "N/A"),
+        "email": getattr(general_records, "email", "N/A"),
+        "address": getattr(general_records, "address", "N/A"),
+        "x_url": getattr(general_records, "x_url", "#"),
+        "f_url": getattr(general_records, "f_url", "#"),
+        "ig_url": getattr(general_records, "ig_url", "#"),
+        "linkedin_url": getattr(general_records, "linkedin_url", "#"),
+        "github_url": getattr(general_records, "github_url", "#"),
+        "location": getattr(general_records, "location", "N/A"),
     }
+
     context["testimonial"] = testimonial
+    context["services"] = services
 
     return render(request, 'case/services.html', context)
 
