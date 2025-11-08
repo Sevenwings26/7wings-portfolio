@@ -26,6 +26,7 @@ general_records = GeneralInfo.objects.first()
 def index(request):
     services = Service.objects.all()[:4]
     testimonials = Testimonial.objects.all()
+    # projects = Project.objects.all()[:3]
     projects = Project.objects.all()[:3]
 
     # Fetch the first general record or None if it doesn't exist
@@ -106,7 +107,8 @@ def projects(request):
     context = {
         'projects': projects
     }
-    return render(request, 'case/projects.html', {})
+    return render(request, 'case/projects.html', context)
+
 
 def services(request):    
     testimonial = Testimonial.objects.all()

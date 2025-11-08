@@ -13,3 +13,4 @@ class PostAdmin(SummernoteModelAdmin):
 admin.site.register(Blog, PostAdmin)
 
 admin.site.register(Comment)
+

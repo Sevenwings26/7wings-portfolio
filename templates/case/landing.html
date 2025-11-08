@@ -84,6 +84,16 @@
 
                     <ul class="s-about__social social-list">
                         <li>
+                            <a href="{{github_url}}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            <span class="u-screen-reader-text">
+                                GitHub
+                            </span>
+                        </a>
+                        </li>
+                        <li>
                             <a href="{{linkedin_url}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/></svg>
                                 <span class="u-screen-reader-text">
@@ -158,9 +168,9 @@
                 </div>
     
                 <!-- View All Projects Button -->
-                <div class="s-expertise__content-btn grid-section-split__bottom">
+                <!-- <div class="s-expertise__content-btn grid-section-split__bottom">
                     <a href="{% url 'projects' %}" class="btn btn--stroke u-fullwidth">View All Projects</a>
-                </div>
+                </div> -->
     
             </div>
         </div>
@@ -212,14 +222,13 @@
                 <div class="section-header grid-section-split__header">
                     <div class="text-pretitle">Clients</div>                           
                     <h2 class="text-display-title">
-                    I’ve had the honor of collaborating across diverse sectos.
-                    {% comment %} I have had the privilege of working with these incredible brands. {% endcomment %}
+                    I’ve had the honor of collaborating across diverse sectors.
                     </h2>       
                 </div> <!-- end section-header -->
             
                 <div class="grid-section-split__primary">
                     <p class="lead">
-                    Over the years, I’ve partnered with professionals and brands making a difference — from public health practitioners and medical doctors to social science researchers and non-profit leaders. Many of these collaborations have centered on building data-driven solutions: tools for research analysis, systems for health education delivery, and platforms that streamline insights for evidence-based decision-making. <br/><br/><br/> 
+                    I’ve partnered with professionals and brands making a difference — from public health practitioners and medical doctors to social science researchers and non-profit leaders. Many of these collaborations have centered on building data-driven solutions: tools for research analysis, systems for health education delivery, and platforms that streamline insights for evidence-based decision-making. <br/><br/><br/> 
                     On the web development front, I’ve helped clients bring their ideas to life through custom websites and applications that are not only functional but thoughtfully designed to reflect their mission and engage their audiences effectively.
                     </p>   
                 </div> <!-- end grid-section-split__primary -->
@@ -235,14 +244,16 @@
                         </a>
                     </div>
                     <div class="clients-list__item">
-                        <a href="#0">
+                        <h3>FIRSTJP LABS</h3>
+                        <!-- <a href="#0">
                             <img src="{% static 'images/clients/flash.svg' %}" alt="">
-                        </a>
+                        </a> -->
                     </div>
                     <div class="clients-list__item">
-                        <a href="#0">
+                        <h3>MarketPrime</h3>
+                        <!-- <a href="#0">
                             <img src="{% static 'images/clients/rise.svg' %}" alt="">
-                        </a>
+                        </a> -->
                     </div>
                 </div> <!-- end clients-list -->
 
@@ -297,90 +308,7 @@
 
 </section> end s-cta -->
 
-<!-- # journal
-================================================== -->
-{% comment %} <section id="journal" class="s-journal">
 
-    <div class="row s-journal__content width-sixteen-col">
-        <div class="column xl-12 grid-block">
 
-            <div class="grid-full section-header text-center">
-                <div class="text-pretitle">Recent Articles</div>                           
-                <h2 class="text-display-title">
-                Latest articles from my blog.
-                </h2>  
-            </div> <!-- end section-header --> 
-
-            <div class="grid-full s-journal__content-main grid-list-items">
-
-                <div class="grid-list-items__item blog-card">
-                    <div class="blog-card__header">
-                        <div class="blog-card__cat-links">
-                            <a href="https://www.dreamhost.com/r.cgi?287326">Sponsored</a>
-                        </div>
-                        <h3 class="blog-card__title"><a href="https://www.dreamhost.com/r.cgi?287326">Need Web Hosting for Your Websites?</a></h3>
-                    </div>
-                    <div class="blog-card__text">
-                        <p>
-                        Need hosting for your website? We would highly recommend <a href="https://www.dreamhost.com/r.cgi?287326">DreamHost</a>.
-                        Enjoy 100% in-house support, guaranteed performance and uptime, 1-click installs, and a super-intuitive control 
-                        panel to make managing your websites and projects easy. <a href="https://www.dreamhost.com/r.cgi?287326">Sign up</a> now to get started.
-                        </p>
-                    </div>
-                </div> <!-- end blog-card -->
-                <div class="grid-list-items__item blog-card">
-                    <div class="blog-card__header">
-                        <div class="blog-card__cat-links">
-                            <a href="blog.html">Productivity</a>
-                        </div>
-                        <h3 class="blog-card__title"><a href="single.html">5 Marketing Productivity Apps for Your Team</a></h3>
-                    </div>
-                    <div class="blog-card__text">
-                        <p>
-                        Rerum quam quos. Quibusdam quis autem voluptatibus earum vel ex error ea magni. Aut asperiores 
-                        sit mollitia. Rem neque et voluptatem eos quia sed eligendi et. Eaque velit eligendi ut 
-                        magnam. Cumque ducimus laborum doloribus facere maxime vel earum quidem enim suscipit.
-                        </p>
-                    </div>
-                </div> <!-- end blog-card -->
-                <div class="grid-list-items__item blog-card">
-                    <div class="blog-card__header">
-                        <div class="blog-card__cat-links">
-                            <a href="blog.html">SEO</a>
-                        </div>
-                        <h3 class="blog-card__title"><a href="single.html">7 SEO Factors to Consider for Better Website Ranking</a></h3>
-                    </div>
-                    <div class="blog-card__text">
-                        <p>
-                        Quibusdam quis autem voluptatibus earum vel ex error ea magni. Rerum quam quos. Aut asperiores 
-                        sit mollitia. Rem neque et voluptatem eos quia sed eligendi et. Eaque velit eligendi ut 
-                        magnam. Cumque ducimus laborum doloribus facere maxime vel earum quidem enim suscipit.
-                        </p>
-                    </div>
-                </div> <!-- end blog card -->
-                <div class="grid-list-items__item blog-card">
-                    <div class="blog-card__header">
-                        <div class="blog-card__cat-links">
-                            <a href="blog.html">Productivity</a>
-                        </div>
-                        <h3 class="blog-card__title"><a href="single.html">5 Effective Web Design Principles</a></h3>
-                    </div>
-                    <div class="blog-card__text">
-                        <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum ullam et laborum aperiam. 
-                        Dignissimos quae voluptatibus ullam esse sapiente fugiat, rerum labore cupiditate obcaecati 
-                        dolore necessitatibus id magni rem officia dolor nam sit laudantium. Quo eaque eveniet quibusdam unde. 
-                        </p>
-                    </div>
-                </div> <!-- end blog-card -->
-
-            </div> <!-- end grid-list-items -->
-
-        </div> <!-- end grid-block-->
-    </div> <!-- end s-journal__content -->
-
-</section>  {% endcomment %}
-
-<!-- end s-journal -->
 
 {% endblock content %}

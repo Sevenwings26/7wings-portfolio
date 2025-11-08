@@ -31,7 +31,7 @@ SECRET_KEY = config('SECRET_KEY')
 if ENVIRONMENT == 'development':
     DEBUG = True
 else:
-    DEBUG = True
+    DEBUG = False
 
 # ALLOWED_HOSTS = []
 
@@ -64,14 +64,14 @@ INSTALLED_APPS = [
     # created app 
     "application",
     "case",
-    # "blog",
+    "blog",
     "acct",
     
     # text editor
     # 'ckeditor_uploader',
     # "ckeditor", 
-    "django_prose_editor",
-    'django_summernote'
+    # "django_prose_editor",
+    'django_summernote',
 ]
 
 # X_FRAME_OPTIONS = 'SAMEORIGIN'
@@ -195,7 +195,7 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.mailersend.net"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "iarowosola@yahoo.com"
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
