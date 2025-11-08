@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment configuration 
 ENVIRONMENT = config('ENVIRONMENT', default="development")
-ENVIRONMENT = "production"
+# ENVIRONMENT = "production"
 
 SECRET_KEY = config('SECRET_KEY')
 
@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     # created app 
     "application",
     "case",
-    "blog",
+    # "blog",
     "acct",
     
     # text editor

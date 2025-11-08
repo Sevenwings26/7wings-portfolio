@@ -12,7 +12,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("former/", include("application.urls")),
     path("", include("case.urls")),
-    path("blog/", include("blog.urls")),
+    # path("blog/", include("blog.urls")),
     path("account/", include("acct.urls")),
     # path('ckeditor/', include('ckeditor_uploader.urls')),
     path('summernote/', include('django_summernote.urls')),
