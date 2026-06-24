@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Environment configuration 
 ENVIRONMENT = config('ENVIRONMENT', default="development")
 ENVIRONMENT = "production"
-
+ 
 SECRET_KEY = config('SECRET_KEY')
 
 # DEBUG = True
@@ -31,8 +31,8 @@ SECRET_KEY = config('SECRET_KEY')
 if ENVIRONMENT == 'development':
     DEBUG = True
 else:
+    # DEBUG = True
     DEBUG = False
-    # DEBUG = False
 
 # ALLOWED_HOSTS = []
 
@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     # created app 
     "application",
     "case",
-    # "blog",
+    "blog",
     "acct",
     
     # text editor
@@ -135,6 +135,18 @@ if ENVIRONMENT == "development":
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": BASE_DIR / "db.sqlite3",
+
+            # replace with postgresql
+            # DATABASES = {
+            # "default": {
+            #     "ENGINE": "django.db.backends.postgresql",
+            #     "NAME": "portfolio_db",
+            #     "USER": "postgres",
+            #     "PASSWORD": "iarowosola#%4956i",
+            #     "HOST": "localhost",
+            #     "PORT": "5432"
+            # }
+            # }
         }
     }
 else:

@@ -8,9 +8,13 @@ class CreateBlogForm(forms.ModelForm):
     body = forms.CharField(widget=SummernoteWidget())  #  WYSIWYG - What You See is What You Get..
     class Meta:
         model = Blog
-        fields = ['author', 'category', 'title', 'image', 'body']
+        fields = ['author', 'category', 'tags', 'status', 'title', 'description', 'image', 'body']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'author': forms.Select(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
         }
         
 # Comment form 
@@ -44,3 +48,4 @@ class ReplyForm(forms.ModelForm):
                 'placeholder': 'Write your reply here...'
             }),
         }
+

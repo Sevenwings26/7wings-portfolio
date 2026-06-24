@@ -2,18 +2,16 @@
 {% load static %}
 {% block content %}
 
-
-
 <section id="blog" class="blog-section">
     <div class="container flex-container" data-aos="fade-up">
         <div class="row g-5">
             <div class="col-lg-8">
                 <article class="blog-details">
                     <div class="post-img">
-                        {% if 'http' in blog.image %}
-                            <img src="{{ blog.image }}" alt="{{ blog.title }}" class="img-fluid">
+                        {% if blog.image %}
+                            <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="img-fluid">
                         {% else %}
-                            <img src="{% static blog.image %}" alt="{{ blog.title }}" class="img-fluid">
+                            <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="{{ blog.title }}" class="img-fluid">
                         {% endif %}
                     </div>
                     
@@ -23,16 +21,22 @@
                         <ul>
                             <li class="d-flex align-items-center">
                                 <i class="fas fa-user"></i> 
-                                <a href="#">{{ blog.author }}</a>
+                                <a href="#">usr//{{ blog.author|default:"anonymous" }}</a>
                             </li>
                             <li class="d-flex align-items-center">
                                 <i class="far fa-clock"></i> 
-                                <a href="#"><time>{{ blog.created_at|date:'M j, Y' }}</time></a>
+                                <a href="#"><time>{{ blog.created_at|date:'Y-m-d' }}</time></a>
                             </li>
                             <li class="d-flex align-items-center">
                                 <i class="far fa-comments"></i>
-                                <span>5 Comments</span>
+                                <span>{{ comments.count }} Comments</span>
                             </li>
+                            {% if blog.category %}
+                            <li class="d-flex align-items-center">
+                                <i class="fas fa-tags"></i>
+                                <span>{{ blog.category }}</span>
+                            </li>
+                            {% endif %}
                         </ul>
                     </div>
                     
@@ -58,7 +62,6 @@
                         </div>
                     </div>
 
-
                     <div class="social-share">
                         <span>Share this post:</span>
                         <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
@@ -68,148 +71,194 @@
                         <a href="#" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                     
-                    <div c<!-- Like Button -->
-                        {% comment %} 
-                        <div class="like-section">
-                            <button id="like-btn" class="like-btn {% if is_liked %}liked{% endif %}">
-                                <i class="far fa-heart"></i>
-                                <span id="like-count">{{ total_likes }}</span>
-                            </button>
-                            <span id="like-feedback" class="action-feedback"></span>
-                        </div>
-                         {% endcomment %}
+                    <!-- Comments Section -->
+                    <div class="comments-section">
+                        <h3 class="comments-title">
+                            <i class="far fa-comments"></i> 
+                            <span id="comments-count">{{ comments.count }}</span> Comments
+                        </h3>
                         
-                         <!-- Comments Section -->
-                        <div class="comments-section">
-                            <h3 class="comments-title"><i class="far fa-comments"></i> <span id="comments-count">{{ comments.count }}</span>  Comments</h3>
-                            
-                            <!-- Comment List -->
-                            <div class="comment-list" id="comments-container">
-                                {% for comment in comments %}
-                                    {% include 'blog/subpage/comment.html' with comment=comment %}
-                                {% empty %}
-                                    <p class="no-comments">No comments yet. Be the first to comment!</p>
-                                {% endfor %}
-                            </div>
-                            
-                            <!-- Comment Form -->
-                            <div class="comment-form">
-                                <h4>Leave a Comment</h4>
-                                <form id="comment-form" method="post" action="{% url 'post_comment' blog.id %}">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        {{ comment_form.as_p }}
-                                    </div>
-                                    <button type="submit" class="submit-btn">Post Comment <i class="fas fa-paper-plane"></i></button>
-                                </form>
-                            </div>
+                        <!-- Comment List -->
+                        <div class="comment-list" id="comments-container">
+                            {% for comment in comments %}
+                                {% include 'blog/subpage/comment.html' with comment=comment %}
+                            {% empty %}
+                                <p class="no-comments" style="font-family: var(--font-mono); color: var(--text-muted);">No comments yet. Be the first to comment!</p>
+                            {% endfor %}
                         </div>
                         
-<!-- Hidden reply form template or dynamic form creation -->
-<div id="reply-form-template" style="display:none;">
-    <form class="reply-form" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            {{ reply_form.content }}
-        </div>
-        <button type="submit" class="submit-btn" data-comment-id="{{ comment.id }}" data-blog-id="{{ blog.id }}">Post Reply</button>
-    </form>
-</div>
-
-
-</article>
-</div>
-    <!--Recent Posts-->
-    <div class="col-lg-4">
-        <div class="sidebar">
-            <div class="sidebar-widget">
-                <h3 class="sidebar-title">Recent Posts</h3>
-                <div class="recent-posts">
-                    {% for recent in recent_blogs %}
-                    <div class="recent-post-item">
-                        <img src="{% static recent.blog_image %}" alt="{{ recent.title }}">
-                        <div class="recent-post-content">
-                            <h4><a href="{% url 'blog_details' blog_id=recent.id %}">{{ recent.title }}</a></h4>
-                            <time datetime="{{ recent.created_at|date:'Y-m-d' }}"><i class="far fa-clock"></i> {{ recent.created_at|date:'M j, Y' }}</time>
+                        <!-- Comment Form -->
+                        <div class="comment-form">
+                            <h4>Leave a Comment</h4>
+                            <form id="comment-form" method="post" action="{% url 'post_comment' slug=blog.slug %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ comment_form.as_p }}
+                                </div>
+                                <button type="submit" class="submit-btn">Post Comment <i class="fas fa-paper-plane"></i></button>
+                            </form>
                         </div>
                     </div>
-                    {% endfor %}
-                </div>
+                    
+                    <!-- Hidden reply form template or dynamic form creation -->
+                    <div id="reply-form-template" style="display:none;">
+                        <form class="reply-form" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ reply_form.content }}
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="submit-btn" style="width: auto;">Post Reply</button>
+                                <button type="button" class="cancel-btn" onclick="this.closest('.reply-form').remove()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </article>
             </div>
             
-          <!--Shuffle recents-->
-            <div class="sidebar-widget">
-                <h3 class="sidebar-title">Tags</h3>
-                <div class="tags">
-                    <a href="#">Technology</a>
-                    <a href="#">Design</a>
-                    <a href="#">Development</a>
-                    <a href="#">Marketing</a>
-                    <a href="#">SEO</a>
-                    <a href="#">Tips</a>
+            <!-- Sidebar Recent Posts -->
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Recent Posts</h3>
+                        <div class="recent-posts">
+                            {% for recent in recent_blogs %}
+                            <div class="recent-post-item">
+                                {% if recent.image %}
+                                    <img src="{{ recent.image.url }}" alt="{{ recent.title }}">
+                                {% else %}
+                                    <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=80&q=80" alt="{{ recent.title }}">
+                                {% endif %}
+                                <div class="recent-post-content">
+                                    <h4><a href="{% url 'blog_detail' slug=recent.slug %}">{{ recent.title }}</a></h4>
+                                    <time datetime="{{ recent.created_at|date:'Y-m-d' }}"><i class="far fa-clock"></i> {{ recent.created_at|date:'Y-m-d' }}</time>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Tags</h3>
+                        <div class="tags">
+                            <a href="#">#AI</a>
+                            <a href="#">#MachineLearning</a>
+                            <a href="#">#WebDev</a>
+                            <a href="#">#Django</a>
+                            <a href="#">#CSS</a>
+                            <a href="#">#Python</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </section>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        document.addEventListener('click', function (e) {
-            if (e.target.closest('.reply-btn')) {
-                e.preventDefault();
-        
-                const btn = e.target.closest('.reply-btn');
-                const commentId = btn.dataset.commentId;
-                const blogId = btn.dataset.blogId;
-        
-                const replyContainer = document.getElementById(`replies-${commentId}`);
-        
-                // Only remove the existing reply form, not the replies
-                const existingForm = replyContainer.querySelector('.reply-form');
-                if (existingForm) {
-                    existingForm.remove();
-                }
-        
-                const replyFormWrapper = document.createElement('div');
-                replyFormWrapper.innerHTML = document.getElementById('reply-form-template').innerHTML;
-                const form = replyFormWrapper.querySelector('form');
-        
-                // 👇 Set the correct action dynamically
-                form.action = `/blog/post/${commentId}/reply/`;
-        
-                form.addEventListener('submit', function (e) {
-                    e.preventDefault();
-                    const formData = new FormData(form);
-                    fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            const newReply = createReplyElement(data);
-                            replyContainer.appendChild(newReply); // Append without clearing
-                            form.remove(); // Remove only the form
-                        } else {
-                            alert("Reply failed to post.");
-                        }
-                    })
-                    .catch(err => console.error(err));
-                });
-        
-                replyContainer.appendChild(replyFormWrapper);
+<script>
+    // Reaction Likes/Dislikes Handling via AJAX
+    const likeButton = document.getElementById('likeButton');
+    const dislikeButton = document.getElementById('dislikeButton');
+    const reactionFeedback = document.getElementById('reactionFeedback');
+    
+    // Set initial values from django context
+    document.querySelector('.like-count').textContent = "{{ blog.likes }}";
+    document.querySelector('.dislike-count').textContent = "{{ blog.dislikes }}";
+    
+    function sendReaction(action) {
+        fetch(`/blog/post/{{ blog.slug }}/${action}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'X-Requested-With': 'XMLHttpRequest'
             }
-        });
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.like-count').textContent = data.likes;
+            document.querySelector('.dislike-count').textContent = data.dislikes;
+            
+            if (action === 'like') {
+                likeButton.classList.add('active');
+                dislikeButton.classList.remove('active');
+                showFeedback("Liked post! Node updated.");
+            } else {
+                dislikeButton.classList.add('active');
+                likeButton.classList.remove('active');
+                showFeedback("Disliked post.");
+            }
+        })
+        .catch(err => console.error(err));
+    }
+    
+    function showFeedback(msg) {
+        reactionFeedback.textContent = msg;
+        reactionFeedback.classList.add('show');
+        setTimeout(() => reactionFeedback.classList.remove('show'), 3000);
+    }
+    
+    if (likeButton) {
+        likeButton.addEventListener('click', () => sendReaction('like'));
+    }
+    if (dislikeButton) {
+        dislikeButton.addEventListener('click', () => sendReaction('dislike'));
+    }
 
-        // Function to create reply element
+    // Comment replies handling
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('.reply-btn')) {
+            e.preventDefault();
+    
+            const btn = e.target.closest('.reply-btn');
+            const commentId = btn.dataset.commentId;
+            const replyContainer = document.getElementById(`replies-${commentId}`);
+    
+            // Only remove the existing reply form, not the replies
+            const existingForm = replyContainer.querySelector('.reply-form');
+            if (existingForm) {
+                existingForm.remove();
+                return;
+            }
+    
+            const replyFormWrapper = document.createElement('div');
+            replyFormWrapper.innerHTML = document.getElementById('reply-form-template').innerHTML;
+            const form = replyFormWrapper.querySelector('form');
+    
+            // Set the correct action dynamically
+            form.action = `/blog/post/${commentId}/reply/`;
+    
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const newReply = createReplyElement(data);
+                        replyContainer.appendChild(newReply); 
+                        form.remove(); 
+                    } else {
+                        alert("Reply failed to post.");
+                    }
+                })
+                .catch(err => console.error(err));
+            });
+    
+            replyContainer.appendChild(replyFormWrapper);
+        }
+    });
+
+    // Function to create reply element
     function createReplyElement(data) {
         const replyDiv = document.createElement('div');
         replyDiv.className = `comment reply ${data.is_author_reply ? 'author-reply' : ''}`;
@@ -239,6 +288,7 @@
                     method: 'POST',
                     body: formData,
                     headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
                         'X-Requested-With': 'XMLHttpRequest',
                     },
                 })
@@ -246,7 +296,12 @@
                 .then(data => {
                     if (data.success) {
                         const commentElement = createCommentElement(data);
-                        document.getElementById('comments-container').prepend(commentElement);
+                        const container = document.getElementById('comments-container');
+                        const noCommentsMsg = container.querySelector('.no-comments');
+                        if (noCommentsMsg) {
+                            noCommentsMsg.remove();
+                        }
+                        container.prepend(commentElement);
                         
                         // Update comments count
                         const countElement = document.getElementById('comments-count');
@@ -284,6 +339,6 @@
             return commentDiv;
         }
     });
-    </script>
+</script>
 
 {% endblock %}

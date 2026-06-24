@@ -1,78 +1,95 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exclusive Blog</title>
-    <!-- Bootstrap CSS -->
+    <meta name="color-scheme" content="dark light">
+    <title>Exclusive Blog // Developer Hub</title>
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:wght@300..900&family=Space+Grotesk:wght@300..700&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS (Optional but keeps system layout utility grid) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    
-    <!-- Custom CSS -->    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
     <link href="{% static 'assets/blog.css' %}" rel="stylesheet" />
 </head>
+
 <body>
     <header>
         <div class="container">
-            <div class="logo">Exclusive<span>Blog</span></div>
+            <div class="logo">Exclusive<span>Blog_</span></div>
             <!-- Toggle button for mobile -->
             <div class="menu-toggle" id="menu-toggle">
-               <i class="fas fa-bars"></i>
-           </div>
+                <i class="fas fa-terminal"></i>
+            </div>
             <!-- Cancel button inside nav -->
             <nav id="nav-menu">
                 <div class="menu-cancel" id="menu-cancel">
                     <i class="fas fa-times"></i>
                 </div>
                 <ul>
-                    <li><a href="{% url 'blog-site' %}" class="active">Portfolio</a></li>
+                    <li><a href="{% url 'index' %}" class="active">Portfolio</a></li>
                     <li><a href="#">Categories</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
-                    <li><a href="#">Login</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="#">Logout</a></li>
+                    {% else %}
+                    <li><a href="">Login</a></li>
                     <li><a href="{% url 'register' %}">Register</a></li>
-                    <li><a href="{% url 'create-blog' %}" class="">Write a Blog</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'create-blog' %}">Write_Blog</a></li>
                 </ul>
             </nav>
         </div>
     </header>
+
     {% block content %}
-    
+
     {% endblock content %}
 
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>ExclusiveBlog</h3>
-                    <p>Premium content for discerning readers</p>
+                    <h3>Exclusive<span>Blog_</span></h3>
+                    <p>High-fidelity technical documentation and insights for modern developers and AI engineers.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="{% url 'blog-site' %}">Home</a></li>
                         <li><a href="#">About</a></li>
-                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Archive</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Subscribe</h4>
+                    <h4>Subscribe // Newsletter</h4>
                     <form class="subscribe-form">
-                        <input type="email" placeholder="Your email">
-                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        <input type="email" placeholder="user@domain.com" required>
+                        <button type="submit"><i class="fas fa-chevron-right"></i></button>
                     </form>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 ExclusiveBlog. All rights reserved.</p>
+                <p>&copy; {% now "Y" %} ExclusiveBlog. [status: active] [env: prod]</p>
             </div>
         </div>
     </footer>
     <!-- Custom JS -->
-    <script src="assets/blogscripts.js"></script>
-        <!-- Bootstrap JS -->
+    <script src="{% static 'assets/blogscripts.js' %}"></script>
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

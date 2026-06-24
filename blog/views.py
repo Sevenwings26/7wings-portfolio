@@ -15,7 +15,7 @@ from django.views import View
 # Class-based views
 class BlogIndex(View):
     def get(self, request):  # method get 
-        blogs = Blog.objects.all().order_by('-created_at')  # Retrieve Latest blog
+        blogs = Blog.published.all().order_by('-published_at')  # Retrieve Latest published blogs
         context = {
             'blogs': blogs,
             # 'categories': categories
@@ -23,8 +23,13 @@ class BlogIndex(View):
         return render(request, 'blog/index.html', context)
 
 
-def blog_detail(request, blog_id):
-    blog = get_object_or_404(Blog, pk=blog_id)
+def blog_detail(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+    
+    # Increment views
+    blog.views += 1
+    blog.save(update_fields=['views'])
+    
     comments = Comment.objects.filter(blog=blog, parent__isnull=True)
 
     # forms 
@@ -42,7 +47,7 @@ def blog_detail(request, blog_id):
 
 
 def recent_blogs(request):
-    blogs = Blog.objects.all()[:2]
+    blogs = Blog.published.all().order_by('-published_at')[:2]
     context = {
         'recent_blogs': blogs,
     }
@@ -50,8 +55,8 @@ def recent_blogs(request):
     
 
 def create_blog(request):
-    form = CreateBlogForm(request.POST, request.FILES)  # request.FILES is added for image upload
     if request.method == "POST":
+        form = CreateBlogForm(request.POST, request.FILES)  # request.FILES is added for image upload
         if form.is_valid():
             form.save()
             print("Form Saved")
@@ -60,12 +65,12 @@ def create_blog(request):
             print("Form is not valid", form.errors)
             return render(request, "blog/create_blog.html", {"form":form})
     else:
-        # form = CreateBlogForm() 
+        form = CreateBlogForm() 
         return render(request, "blog/create_blog.html", {"form":form})
 
 
-def update_blog(request, blog_id):
-    blog = get_object_or_404(Blog, id=blog_id)
+def update_blog(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
     if request.method == 'POST':
         form = CreateBlogForm(request.POST, request.FILES, instance=blog)
         if form.is_valid():
@@ -80,8 +85,8 @@ def update_blog(request, blog_id):
 
 # @login_required
 
-def delete_blog(request, blog_id):
-    blog = get_object_or_404(Blog, pk=blog_id)
+def delete_blog(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
     blog.delete()
     return redirect('blog-site')
 
@@ -91,8 +96,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
 @require_POST
-def post_comment(request, blog_id):
-    blog = get_object_or_404(Blog, pk=blog_id)
+def post_comment(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
     form = CommentForm(request.POST)
     
     if form.is_valid():
@@ -136,29 +141,36 @@ def post_reply(request, comment_id):
     return JsonResponse({'success': False}, status=400)
 
 # likes and dislike  
-# avoid for @csrf_exempt
-def like_blog(request, blog_id):
-    blog = Blog.objects.get(pk=blog_id)
-    session_key = f"liked_{blog_id}"
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+def like_blog(request, slug):
+    from .models import Like
+    blog = get_object_or_404(Blog, slug=slug)
+    ip = get_client_ip(request)
     
-    if not request.session.get(session_key, False):
+    if not Like.objects.filter(blog=blog, ip_address=ip).exists():
+        Like.objects.create(blog=blog, ip_address=ip)
         blog.likes += 1
-        blog.save()
-        request.session[session_key] = True  # To prevent multiple likes
+        blog.save(update_fields=['likes'])
     
     return JsonResponse({'likes': blog.likes, 'dislikes': blog.dislikes})
 
-def dislike_blog(request, blog_id):
-    blog = Blog.objects.get(pk=blog_id)
-    session_key = f"liked_{blog_id}"
+def dislike_blog(request, slug):
+    blog = get_object_or_404(Blog, slug=slug)
+    session_key = f"disliked_{blog.id}"
     
     if not request.session.get(session_key, False):
-        blog.likes += 1
-        blog.save()
-        request.session[session_key] = True  # To prevent multiple likes
+        blog.dislikes += 1
+        blog.save(update_fields=['dislikes'])
+        request.session[session_key] = True  # To prevent multiple dislikes
     
     return JsonResponse({'likes': blog.likes, 'dislikes': blog.dislikes})
-
 
 
 import google.generativeai as genai

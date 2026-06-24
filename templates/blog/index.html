@@ -6,9 +6,9 @@
 <section class="hero">
     <div class="container">
         <div class="hero-content">
-            <h1>Discover Exclusive Content</h1>
-            <p>Join our community of premium bloggers and readers</p>
-            <button class="btn cta">Start Reading</button>
+            <h1>Discover AI & Software Intel_</h1>
+            <p>An interactive repository of technical deep-dives, developer guides, and artificial intelligence research.</p>
+            <button class="btn cta" onclick="document.getElementById('blogGrid').scrollIntoView({behavior: 'smooth'})">Initialize Data Feed</button>
         </div>
     </div>
 </section>
@@ -18,42 +18,58 @@
         <h2>Featured Articles</h2>            
         <div class="blog-grid" id="blogGrid">
             {% for blog in blogs %}
-            <div class='blog-card'>
+            <div class="blog-card">
                 <div class="blog-image">
-                    <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                    {% if blog.image %}
+                        {% if 'http' in blog.image.url %}
+                            <img src="{{ blog.image.url }}" alt="{{ blog.title }}" loading="lazy">
+                        {% else %}
+                            <img src="{{ blog.image.url }}" alt="{{ blog.title }}" loading="lazy">
+                        {% endif %}
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=600&q=80" alt="Placeholder image" loading="lazy">
+                    {% endif %}
+                    
                     <div class="blog-actions">
-                        <a href="{% url 'update-blog' blog_id=blog.id %}" class="action-btn edit-btn" title="Edit">
+                        <a href="{% url 'update-blog' slug=blog.slug %}" class="action-btn edit-btn" title="Edit node">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a href="{% url 'delete-blog' blog_id=blog.id %}" class="action-btn delete-btn" title="Delete">
+                        <a href="{% url 'delete-blog' slug=blog.slug %}" class="action-btn delete-btn" title="Delete node">
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>
                 </div>
+                
                 <div class="blog-content">
                     <div class="blog-meta">
-                        <span class="blog-category">{{ blog.category }}</span>
-                        <span class="blog-date">{{ blog.created_at|date:"M d, Y" }}</span>
+                        <span class="blog-category">{{ blog.category|default:"General" }}</span>
+                        <span class="blog-date">{{ blog.created_at|date:"Y-m-d" }}</span>
                     </div>
                     <h3>{{ blog.title }}</h3>
-                    <p class="blog-author"> {{ blog.admin_author }}</p>
-                    <p class="blog-author">By {{ blog.author }}</p>
+                    <div class="blog-author">
+                        {% if blog.admin_author %}
+                            {{ blog.admin_author }}
+                        {% else %}
+                            {{ blog.author|default:"anonymous" }}
+                        {% endif %}
+                    </div>
                     <div class="blog-excerpt">
                         {{ blog.body|truncatechars:150|safe }}
                     </div>
                     <div class="blog-footer">
-                        <a href="{% url 'blog_detail' blog_id=blog.id %}" class="read-more">
-                            Read More <i class="fas fa-arrow-right"></i>
+                        <a href="{% url 'blog_detail' slug=blog.slug %}" class="read-more">
+                            Read_More <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
+            </div>
+            {% empty %}
+            <div class="w-100 text-center py-5" style="grid-column: 1 / -1; font-family: var(--font-mono); color: var(--text-muted);">
+                <i class="fas fa-info-circle mb-3 d-block" style="font-size: 2rem; color: var(--primary-color);"></i>
+                No active records found. Create a new blog node to begin feed.
             </div>
             {% endfor %}
         </div>
     </div>
 </section>
 {% endblock content %}
-
-
-
-

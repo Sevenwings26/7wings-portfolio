@@ -23,8 +23,8 @@
     </div>
     {% endif %}
 
-    <h1>Welcome</h1>
-    <p>It's our community</p>
+    <h1>Welcome Back</h1>
+    <p>Authenticate to access node console</p>
     
     <form method="POST">
         {% csrf_token %}
@@ -34,7 +34,7 @@
             <label for="{{ field.id_for_label }}">{{ field.label }}</label>
             {{ field }}
             {% if field.help_text %}
-            <small class="form-text">{{ field.help_text }}</small>
+            <small class="form-text text-muted" style="font-family: var(--font-mono); font-size: 0.75rem;">{{ field.help_text }}</small>
             {% endif %}
             {% for error in field.errors %}
             <div class="alert alert-error" style="margin-top: 5px; padding: 8px;">
@@ -45,17 +45,14 @@
         {% endfor %}
         
         <button type="submit">
-            <i class="fas fa-user-plus"></i> Login
+            <i class="fas fa-sign-in-alt"></i> Authenticate
         </button>
     </form>
     
     <div class="auth-footer">
-        Forgot Password? <a href="">Reset</a>
+        Need an account? <a href="{% url 'register' %}">Register Node</a>
     </div>
 </div>
-
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -63,8 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(alert => {
         setTimeout(() => {
+            alert.style.transition = 'opacity 0.5s ease';
             alert.style.opacity = '0';
-            setTimeout(() => alert.remove(), 300);
+            setTimeout(() => alert.remove(), 500);
         }, 5000);
     });
 });

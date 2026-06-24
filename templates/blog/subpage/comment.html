@@ -1,9 +1,8 @@
-
 <div class="comment" id="comment-{{ comment.id }}">
     <div class="comment-author">
         <div>
             <h5>{{ comment.name }}</h5>
-            <span class="comment-date"><i class="far fa-clock"></i> {{ comment.created_at|date:"F j, Y, g:i a" }}</span>
+            <span class="comment-date"><i class="far fa-clock"></i> {{ comment.created_at|date:"Y-m-d H:i" }}</span>
         </div>
     </div>
     <div class="comment-text">
@@ -18,8 +17,13 @@
             <div class="comment reply {% if reply.is_author_reply %}author-reply{% endif %}" id="comment-{{ reply.id }}">
                 <div class="comment-author">
                     <div>
-                        <h5>{{ reply.name }}</h5>
-                        <span class="comment-date"><i class="far fa-clock"></i> {{ reply.created_at|date:"F j, Y, g:i a" }}</span>
+                        <h5>
+                            {{ reply.name }}
+                            {% if reply.is_author_reply %}
+                                <span class="author-badge">Author</span>
+                            {% endif %}
+                        </h5>
+                        <span class="comment-date"><i class="far fa-clock"></i> {{ reply.created_at|date:"Y-m-d H:i" }}</span>
                     </div>
                 </div>
                 <div class="comment-text">
@@ -28,4 +32,4 @@
             </div>
         {% endfor %}
     </div>
-</div> 
+</div>
